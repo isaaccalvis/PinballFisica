@@ -1,10 +1,10 @@
 ﻿  ModuleSceneIntro.cpp
-c:\users\aleixg\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(203): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\aleixg\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(205): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\aleixg\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(207): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\aleixg\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(210): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\aleixg\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(220): warning C4101: 'y': unreferenced local variable
-c:\users\aleixg\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(220): warning C4101: 'x': unreferenced local variable
+c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(203): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(205): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(207): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(210): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(220): warning C4101: 'y': unreferenced local variable
+c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal\modulesceneintro.cpp(220): warning C4101: 'x': unreferenced local variable
 c:\program files (x86)\microsoft visual studio 14.0\vc\include\limits(210): warning C4577: 'noexcept' used with no exception handling mode specified; termination on exception is not guaranteed. Specify /EHsc
-  SDL Game.vcxproj -> C:\Users\AleixG\Desktop\PinballFisica\Iluminati_Painbal\Debug\2D Physics - class 4.exe
-  SDL Game.vcxproj -> C:\Users\AleixG\Desktop\PinballFisica\Iluminati_Painbal\Debug\2D Physics - class 4.pdb (Full PDB)
+  SDL Game.vcxproj -> C:\Users\aleixgm\Desktop\PinballFisica\Iluminati_Painbal\Debug\2D Physics - class 4.exe
+  SDL Game.vcxproj -> C:\Users\aleixgm\Desktop\PinballFisica\Iluminati_Painbal\Debug\2D Physics - class 4.pdb (Full PDB)
