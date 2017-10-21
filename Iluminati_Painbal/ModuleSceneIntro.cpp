@@ -180,18 +180,28 @@ bool ModuleSceneIntro::Start()
 		410, 81,
 		410, 99
 	};
+	int barr[8] = {
+		524, 811,
+		524, 764,
+		537, 764,
+		537, 811
+	};
+	
 	BG = App->physics->CreateChain(0, 0, bg, 86, b2_staticBody);
 	placaE = App->physics->CreateChain(0, 0, placE, 16, b2_staticBody);
 	placaD = App->physics->CreateChain(0, 0, placD, 18, b2_staticBody);
 	wallE = App->physics->CreateChain(0, 0, walle, 58, b2_staticBody);
 	wallD = App->physics->CreateChain(0, 0, walld, 42, b2_staticBody);
 	wallU = App->physics->CreateChain(0, 0, wallu, 42, b2_staticBody);
+	Barra = App->physics->CreateChain(0, 0, barr, 8, b2_staticBody);
 
 	BallG = App->physics->CreateCircle(357, 110, 24, b2_staticBody);
 	BallU = App->physics->CreateCircle(273, 69, 24, b2_staticBody);
 	BallD = App->physics->CreateCircle(406, 172, 24, b2_staticBody);
 	BallE = App->physics->CreateCircle(299, 161, 24, b2_staticBody);
 	BallB = App->physics->CreateCircle(351, 207, 24, b2_staticBody);
+
+
 
 	return ret;
 }
@@ -218,6 +228,11 @@ update_status ModuleSceneIntro::Update()
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		App->renderer->camera.x -= 4;*/
 
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+	}
+
+
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -227,7 +242,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25, b2_dynamicBody));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 9, b2_dynamicBody));
 		circles.getLast()->data->listener = this;
 	}
 
