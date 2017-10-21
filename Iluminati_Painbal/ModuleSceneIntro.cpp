@@ -37,7 +37,8 @@ bool ModuleSceneIntro::Start()
 	fons = App->textures->Load("pinball/BG.png");
 
 
-	int bg[86] = {
+	// Pivot -1, -1
+	int bg[100] = {
 		129, 777,
 		18, 711,
 		17, 589,
@@ -80,7 +81,14 @@ bool ModuleSceneIntro::Start()
 		420, 517,
 		485, 588,
 		485, 707,
-		377, 774
+		377, 774,
+		377, 855,
+		357, 984,
+		318, 1155,
+		187, 1436,
+		77, 1233,
+		105, 916,
+		115, 814
 	};
 	int placE[16] = {
 		91, 590,
@@ -180,26 +188,51 @@ bool ModuleSceneIntro::Start()
 		410, 81,
 		410, 99
 	};
-	int barr[8] = {
-		524, 811,
-		524, 764,
-		537, 764,
-		537, 811
+	int palD[20] = {
+		279, 792,
+		337, 747,
+		347, 745,
+		354, 752,
+		353, 764,
+		337, 773,
+		313, 788,
+		295, 797,
+		285, 803,
+		278, 800
 	};
+	int palE[24] = {
+		174, 761,
+		215, 792,
+		219, 798,
+		217, 804,
+		210, 804,
+		203, 800,
+		146, 766,
+		142, 759,
+		143, 752,
+		148, 749,
+		155, 749,
+		164, 754
+	};
+
 	
-	BG = App->physics->CreateChain(0, 0, bg, 86, b2_staticBody);
+	BG = App->physics->CreateChain(0, 0, bg, 100, b2_staticBody);
 	placaE = App->physics->CreateChain(0, 0, placE, 16, b2_staticBody);
 	placaD = App->physics->CreateChain(0, 0, placD, 18, b2_staticBody);
 	wallE = App->physics->CreateChain(0, 0, walle, 58, b2_staticBody);
 	wallD = App->physics->CreateChain(0, 0, walld, 42, b2_staticBody);
 	wallU = App->physics->CreateChain(0, 0, wallu, 42, b2_staticBody);
-	Barra = App->physics->CreateChain(0, 0, barr, 8, b2_staticBody);
+	palancaD = App->physics->CreateChain(0, 0, palD, 20, b2_staticBody);
+	palancaE = App->physics->CreateChain(0, 0, palE, 24, b2_staticBody);
 
 	BallG = App->physics->CreateCircle(357, 110, 24, b2_staticBody);
 	BallU = App->physics->CreateCircle(273, 69, 24, b2_staticBody);
 	BallD = App->physics->CreateCircle(406, 172, 24, b2_staticBody);
 	BallE = App->physics->CreateCircle(299, 161, 24, b2_staticBody);
 	BallB = App->physics->CreateCircle(351, 207, 24, b2_staticBody);
+
+	barraL = App->physics->CreateRectangle(51, 645, 9, 77, b2_staticBody, 0);
+	barraR = App->physics->CreateRectangle(447, 645, 9, 77, b2_staticBody, 0);
 
 
 
@@ -246,10 +279,6 @@ update_status ModuleSceneIntro::Update()
 		circles.getLast()->data->listener = this;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50));
-	}
 
 	if(App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
