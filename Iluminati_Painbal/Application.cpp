@@ -18,8 +18,8 @@ Application::Application()
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, true);
-	player = new ModulePlayer(this);
 	scene_intro = new ModuleSceneIntro(this);
+	player = new ModulePlayer(this);
 	physics = new ModulePhysics(this);
 
 	// The order of calls is very important!
