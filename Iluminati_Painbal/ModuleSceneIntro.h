@@ -39,6 +39,7 @@ public:
 	PhysBody* barraR;
 
 
+
 	PhysBody* sensor;
 	bool sensed;
 

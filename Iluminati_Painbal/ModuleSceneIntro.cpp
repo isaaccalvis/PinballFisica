@@ -215,6 +215,7 @@ bool ModuleSceneIntro::Start()
 		164, 754
 	};
 
+
 	
 	BG = App->physics->CreateChain(0, 0, bg, 100, b2_staticBody);
 	placaE = App->physics->CreateChain(0, 0, placE, 16, b2_staticBody);
@@ -224,6 +225,7 @@ bool ModuleSceneIntro::Start()
 	wallU = App->physics->CreateChain(0, 0, wallu, 42, b2_staticBody);
 	palancaD = App->physics->CreateChain(0, 0, palD, 20, b2_staticBody);
 	palancaE = App->physics->CreateChain(0, 0, palE, 24, b2_staticBody);
+
 
 	BallG = App->physics->CreateCircle(357, 110, 24, b2_staticBody);
 	BallU = App->physics->CreateCircle(273, 69, 24, b2_staticBody);

@@ -21,6 +21,9 @@ public:
 
 
 public:
-	float x, y;
 	b2Body *Circle_Body;
+	b2Body *BarrBody;
+private:
+	// Aquests vectors son per la barra
+
 };
