@@ -13,6 +13,11 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	SDL_Texture* circle;
+
+	SDL_Rect R;
+
+	
 public:
 
 };

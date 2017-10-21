@@ -23,6 +23,16 @@ public:
 	p2List<PhysBody*> ricks;
 
 	PhysBody* BG;
+	PhysBody* placaE;
+	PhysBody* placaD;
+	PhysBody* wallE;
+	PhysBody* wallD;
+	PhysBody* wallU;
+	PhysBody* BallG;
+	PhysBody* BallU;
+	PhysBody* BallD;
+	PhysBody* BallE;
+	PhysBody* BallB;
 
 	PhysBody* sensor;
 	bool sensed;

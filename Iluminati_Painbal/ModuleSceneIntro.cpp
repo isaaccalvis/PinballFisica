@@ -37,44 +37,161 @@ bool ModuleSceneIntro::Start()
 	fons = App->textures->Load("pinball/BG.png");
 
 
-
-	int bg[66] = {
-		20, 799,
-		19, 593,
-		85, 515,
-		85, 479,
-		63, 433,
-		43, 383,
-		31, 319,
-		26, 256,
-		30, 203,
-		53, 149,
-		87, 98,
-		129, 59,
-		182, 34,
-		241, 15,
-		284, 15,
-		328, 15,
-		376, 20,
-		428, 39,
-		465, 66,
-		496, 96,
-		530, 145,
-		541, 203,
-		543, 365,
-		546, 800,
-		515, 801,
-		513, 428,
-		504, 422,
-		489, 438,
-		460, 459,
-		420, 481,
-		420, 519,
-		485, 586,
-		485, 799
+	int bg[86] = {
+		129, 777,
+		18, 711,
+		17, 589,
+		83, 519,
+		85, 480,
+		67, 445,
+		52, 411,
+		36, 361,
+		29, 316,
+		25, 270,
+		28, 215,
+		45, 160,
+		72, 118,
+		96, 89,
+		131, 60,
+		167, 38,
+		208, 21,
+		230, 16,
+		260, 13,
+		282, 12,
+		301, 12,
+		329, 13,
+		359, 17,
+		394, 27,
+		436, 46,
+		472, 72,
+		502, 100,
+		520, 130,
+		535, 168,
+		541, 202,
+		544, 801,
+		514, 801,
+		512, 429,
+		509, 423,
+		501, 423,
+		492, 434,
+		473, 451,
+		447, 465,
+		420, 474,
+		420, 517,
+		485, 588,
+		485, 707,
+		377, 774
 	};
+	int placE[16] = {
+		91, 590,
+		91, 660,
+		138, 690,
+		151, 689,
+		153, 682,
+		106, 585,
+		102, 580,
+		92, 582
+	};
+	int placD[18] = {
+		343, 682,
+		386, 591,
+		392, 583,
+		398, 581,
+		405, 584,
+		405, 661,
+		357, 692,
+		349, 693,
+		343, 690
+	};
+	int walle[58] = {
+		138, 307,
+		118, 272,
+		104, 231,
+		101, 192,
+		107, 154,
+		124, 116,
+		147, 84,
+		173, 67,
+		206, 53,
+		226, 47,
+		250, 44,
+		260, 50,
+		274, 64,
+		275, 111,
+		297, 152,
+		296, 228,
+		192, 296,
+		177, 280,
+		168, 263,
+		166, 245,
+		172, 234,
+		183, 228,
+		186, 214,
+		182, 205,
+		172, 201,
+		157, 203,
+		144, 216,
+		141, 230,
+		138, 261
+	};
+	int walld[42] = {
+		426, 374,
+		434, 377,
+		477, 334,
+		480, 325,
+		471, 301,
+		445, 274,
+		404, 237,
+		389, 224,
+		376, 214,
+		344, 211,
+		322, 300,
+		323, 307,
+		327, 309,
+		332, 308,
+		341, 303,
+		352, 303,
+		364, 307,
+		371, 318,
+		373, 331,
+		368, 344,
+		374, 347
+	};
+	int wallu[42] = {
+		410, 117,
+		410, 165,
+		411, 178,
+		432, 201,
+		464, 233,
+		486, 257,
+		500, 277,
+		505, 256,
+		507, 240,
+		508, 212,
+		506, 183,
+		499, 157,
+		489, 134,
+		470, 109,
+		453, 93,
+		436, 80,
+		426, 73,
+		418, 70,
+		412, 73,
+		410, 81,
+		410, 99
+	};
+	BG = App->physics->CreateChain(0, 0, bg, 86, b2_staticBody);
+	placaE = App->physics->CreateChain(0, 0, placE, 16, b2_staticBody);
+	placaD = App->physics->CreateChain(0, 0, placD, 18, b2_staticBody);
+	wallE = App->physics->CreateChain(0, 0, walle, 58, b2_staticBody);
+	wallD = App->physics->CreateChain(0, 0, walld, 42, b2_staticBody);
+	wallU = App->physics->CreateChain(0, 0, wallu, 42, b2_staticBody);
 
-	BG = App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), bg, 66, b2_staticBody);
+	BallG = App->physics->CreateCircle(357, 110, 24, b2_staticBody);
+	BallU = App->physics->CreateCircle(273, 69, 24, b2_staticBody);
+	BallD = App->physics->CreateCircle(406, 172, 24, b2_staticBody);
+	BallE = App->physics->CreateCircle(299, 161, 24, b2_staticBody);
+	BallB = App->physics->CreateCircle(351, 207, 24, b2_staticBody);
 
 	return ret;
 }
@@ -91,6 +208,16 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
+
+	/*if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		App->renderer->camera.y -= 4;
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		App->renderer->camera.y += 4;
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		App->renderer->camera.x += 4;
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		App->renderer->camera.x -= 4;*/
+
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
@@ -100,7 +227,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25, b2_dynamicBody));
 		circles.getLast()->data->listener = this;
 	}
 
