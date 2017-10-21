@@ -33,6 +33,12 @@ public:
 	PhysBody* BallD;
 	PhysBody* BallE;
 	PhysBody* BallB;
+	PhysBody* palancaD;
+	PhysBody* palancaE;
+	PhysBody* barraL;
+	PhysBody* barraR;
+
+
 
 	PhysBody* sensor;
 	bool sensed;
