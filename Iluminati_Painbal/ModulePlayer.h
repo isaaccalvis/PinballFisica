@@ -14,7 +14,6 @@ public:
 	bool CleanUp();
 
 	SDL_Texture* circle;
-
 	SDL_Rect R;
 
 	
