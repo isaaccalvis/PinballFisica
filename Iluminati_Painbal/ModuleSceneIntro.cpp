@@ -180,12 +180,7 @@ bool ModuleSceneIntro::Start()
 		410, 81,
 		410, 99
 	};
-	int barr[8] = {
-		524, 811,
-		524, 764,
-		537, 764,
-		537, 811
-	};
+
 	
 	BG = App->physics->CreateChain(0, 0, bg, 86, b2_staticBody);
 	placaE = App->physics->CreateChain(0, 0, placE, 16, b2_staticBody);
@@ -193,7 +188,6 @@ bool ModuleSceneIntro::Start()
 	wallE = App->physics->CreateChain(0, 0, walle, 58, b2_staticBody);
 	wallD = App->physics->CreateChain(0, 0, walld, 42, b2_staticBody);
 	wallU = App->physics->CreateChain(0, 0, wallu, 42, b2_staticBody);
-	Barra = App->physics->CreateChain(0, 0, barr, 8, b2_staticBody);
 
 	BallG = App->physics->CreateCircle(357, 110, 24, b2_staticBody);
 	BallU = App->physics->CreateCircle(273, 69, 24, b2_staticBody);
