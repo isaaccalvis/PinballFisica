@@ -19,7 +19,6 @@ public:
 	SDL_Texture* Circle_Texture;
 	SDL_Rect Circle_Rect;
 
-
 public:
 	b2Body *Circle_Body;
 	b2Body *BarrBody;
