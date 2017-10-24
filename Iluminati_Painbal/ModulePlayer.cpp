@@ -19,7 +19,7 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	// Creacio Pilota
-	b2BodyDef baseCircle;
+	/*b2BodyDef baseCircle;
 	baseCircle.type = b2_dynamicBody;
 	baseCircle.bullet = true;
 	baseCircle.position.Set(PIXEL_TO_METERS(530), PIXEL_TO_METERS(600));
@@ -32,8 +32,10 @@ bool ModulePlayer::Start()
 	fixture.shape = &shapeCircle;
 	fixture.density = 2;
 	fixture.restitution = 0.7f;
-	body->CreateFixture(&fixture);
+	body->CreateFixture(&fixture);*/
 	// ~Creacio Pilota
+
+	Circle_Body = App->physics->CreateCircle(530, 600, 8, b2_dynamicBody);
 
 	//Creacio Barra
 	b2BodyDef baseBarr;
@@ -60,11 +62,20 @@ bool ModulePlayer::Start()
 // TXELL SEXY
 update_status ModulePlayer::Update()
 {
-	App->renderer->Blit(Circle_Texture, METERS_TO_PIXELS(Circle_Body->GetPosition().x) - 9, METERS_TO_PIXELS(Circle_Body->GetPosition().y) - 9, &Circle_Rect);
+	
+	int x, y;
+	Circle_Body->GetPosition(x, y);
+	App->renderer->Blit(Circle_Texture, METERS_TO_PIXELS(x), METERS_TO_PIXELS(y), &Circle_Rect);
 	b2Vec2 vecGoDownBarr(0, -0.01f);
 	b2Vec2 vecGoUpBarr(0, 0.2f);
 	b2Vec2 vecGoStartBarr(PIXEL_TO_METERS(530), PIXEL_TO_METERS(770));
 	printf_s("%f\n", BarrBody->GetPosition().y);
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && start) {
+		start = false;
+		Circle_Body->body->ApplyLinearImpulse({0, -5}, {0,0}, true);
+		//Line join
+	}
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT) {
 		if (BarrBody->GetPosition().y < 16.3f)
 			BarrBody->SetTransform(BarrBody->GetPosition() - vecGoDownBarr, 0);

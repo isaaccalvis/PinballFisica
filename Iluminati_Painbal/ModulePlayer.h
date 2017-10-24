@@ -20,8 +20,9 @@ public:
 	SDL_Rect Circle_Rect;
 
 public:
-	b2Body *Circle_Body;
+	PhysBody *Circle_Body;
 	b2Body *BarrBody;
+	bool start = true;
 private:
 	// Aquests vectors son per la barra
 

@@ -37,9 +37,6 @@ public:
 	PhysBody* palancaE;
 	PhysBody* barraL;
 	PhysBody* barraR;
-
-
-
 	PhysBody* sensor;
 	bool sensed;
 
