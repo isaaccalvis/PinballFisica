@@ -1,0 +1,10 @@
+﻿  ModuleSceneIntro.cpp
+c:\users\aleixg\desktop\pinballfisica boo\iluminati_painbal\modulesceneintro.cpp(359): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleixg\desktop\pinballfisica boo\iluminati_painbal\modulesceneintro.cpp(361): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\aleixg\desktop\pinballfisica boo\iluminati_painbal\modulesceneintro.cpp(363): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\aleixg\desktop\pinballfisica boo\iluminati_painbal\modulesceneintro.cpp(366): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\aleixg\desktop\pinballfisica boo\iluminati_painbal\modulesceneintro.cpp(387): warning C4101: 'y': unreferenced local variable
+c:\users\aleixg\desktop\pinballfisica boo\iluminati_painbal\modulesceneintro.cpp(387): warning C4101: 'x': unreferenced local variable
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\limits(210): warning C4577: 'noexcept' used with no exception handling mode specified; termination on exception is not guaranteed. Specify /EHsc
+  SDL Game.vcxproj -> C:\Users\AleixG\Desktop\PinballFisica BOO\Iluminati_Painbal\Debug\2D Physics - class 4.exe
+  SDL Game.vcxproj -> C:\Users\AleixG\Desktop\PinballFisica BOO\Iluminati_Painbal\Debug\2D Physics - class 4.pdb (Full PDB)
