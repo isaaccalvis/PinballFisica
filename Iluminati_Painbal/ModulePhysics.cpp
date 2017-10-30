@@ -86,10 +86,10 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2BodyType type, float angle)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2BodyType type , float angle)
 {
 
-	b2Vec2 pos = { PIXEL_TO_METERS(x), PIXEL_TO_METERS(y) };
+	//b2Vec2 pos = { PIXEL_TO_METERS(x), PIXEL_TO_METERS(y) };
 
 	b2BodyDef body;
 	body.type = type;
@@ -107,7 +107,7 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 
 	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
-	pbody->body->SetTransform(pos, angle);
+	//pbody->body->SetTransform(pos, angle);
 	b->SetUserData(pbody);
 	pbody->width = width * 0.5f;
 	pbody->height = height * 0.5f;

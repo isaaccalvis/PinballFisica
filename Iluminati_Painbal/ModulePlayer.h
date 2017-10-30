@@ -7,7 +7,6 @@
 class ModulePlayer : public Module
 {
 public:
-
 	ModulePlayer(Application* app, bool start_enabled = true);
 	virtual ~ModulePlayer();
 
@@ -22,8 +21,12 @@ public:
 public:
 	PhysBody *Circle_Body;
 	b2Body *BarrBody;
+	//Barra inic
+	b2DistanceJoint* barraInici;
+
 	bool start = true;
 private:
+	float yBarraInicial = 0;
 	// Aquests vectors son per la barra
 
 };
