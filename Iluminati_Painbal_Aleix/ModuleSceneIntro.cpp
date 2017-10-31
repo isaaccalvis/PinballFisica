@@ -238,8 +238,8 @@ bool ModuleSceneIntro::Start()
 
 	
 	BG = App->physics->CreateChain(0, 0, bg, 100, b2_staticBody, 0.1f);
-	placaE = App->physics->CreateChain(0, 0, plac_L, 16, b2_staticBody, 3);
-	placaD = App->physics->CreateChain(0, 0, plac_R, 18, b2_staticBody, 3);
+	placaE = App->physics->CreateChain(0, 0, plac_L, 16, b2_staticBody, 2);
+	placaD = App->physics->CreateChain(0, 0, plac_R, 18, b2_staticBody, 2);
 	wallL = App->physics->CreateChain(0, 0, wall_L, 58, b2_staticBody, 0.1f);
 	wallR = App->physics->CreateChain(0, 0, wall_R, 10, b2_staticBody, 0.1f);
 	wallU = App->physics->CreateChain(0, 0, wall_U, 42, b2_staticBody, 0.1f);

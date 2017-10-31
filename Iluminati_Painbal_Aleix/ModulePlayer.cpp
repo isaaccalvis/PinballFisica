@@ -20,52 +20,8 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 
-	/*int palD[20] = {
-		279, 792,
-		337, 747,
-		347, 745,
-		354, 752,
-		353, 764,
-		337, 773,
-		313, 788,
-		295, 797,
-		285, 803,
-		278, 800
-	};
-	int palE[24] = {
-		174, 761,
-		215, 792,
-		219, 798,
-		217, 804,
-		210, 804,
-		203, 800,
-		146, 766,
-		142, 759,
-		143, 752,
-		148, 749,
-		155, 749,
-		164, 754
-	};
-
-	*/
-
 	//////////////////////////////////////////////////////////////////////////////
-	// Creacio Pilota
-	/*b2BodyDef baseCircle;
-	baseCircle.type = b2_dynamicBody;
-	baseCircle.bullet = true;
-	baseCircle.position.Set(PIXEL_TO_METERS(530), PIXEL_TO_METERS(600));
-	b2CircleShape shapeCircle;
-	shapeCircle.m_radius = PIXEL_TO_METERS(9);
-	b2Body *body = App->physics->world->CreateBody(&baseCircle);
-	Circle_Body = body;
-	body->SetBullet(true);
-	b2FixtureDef fixture;
-	fixture.shape = &shapeCircle;
-	fixture.density = 2;
-	fixture.restitution = 0.7f;
-	body->CreateFixture(&fixture);*/
-	// ~Creacio Pilota
+
 
 	Stickers();
 	NewBall();
@@ -126,7 +82,7 @@ update_status ModulePlayer::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && start) {
 		start = false;
-		Circle_Body->body->ApplyLinearImpulse({0, -5}, {0,0}, true);
+		Circle_Body->body->ApplyLinearImpulse({0, -3.5f}, {0,0}, true);
 		//Line join
 	}
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT) {
@@ -149,7 +105,8 @@ update_status ModulePlayer::Update()
 		App->physics->world->DestroyBody(Circle_Body->body);
 		if (live > 0)
 			NewBall();
-			live--;
+		start = true;
+		live--;
 
 	}
 	return UPDATE_CONTINUE;
