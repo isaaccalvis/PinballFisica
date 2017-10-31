@@ -318,10 +318,13 @@ update_status ModuleSceneIntro::Update()
 
 	while(c != NULL)
 	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
-			App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
+		if (c->data->texturaActual != nullptr) {
+			App->renderer->Blit(c->data->texturaActual, c->data->body->GetPosition().x, c->data->body->GetPosition().y, &c->data->texturaRect);
+		}
+		//int x, y;
+		//c->data->GetPosition(x, y);
+		//if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
+		//	App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
 

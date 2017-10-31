@@ -4,6 +4,7 @@
 #include "ModuleRender.h"
 #include "ModulePhysics.h"
 #include "p2Point.h"
+#include "ModuleSceneIntro.h"
 #include "math.h"
 
 #ifdef _DEBUG
@@ -88,9 +89,8 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type,
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2BodyType type, float angle)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2BodyType type, float angle, SDL_Texture* textura, SDL_Rect rectTextura)
 {
-
 	b2Vec2 pos = { PIXEL_TO_METERS(x), PIXEL_TO_METERS(y) };
 
 	b2BodyDef body;
@@ -114,6 +114,19 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 	pbody->width = width * 0.5f;
 	pbody->height = height * 0.5f;
 
+	if (textura != nullptr) {
+		pbody->texturaActual = textura;
+		if (rectTextura.x != 0 && rectTextura.y != 0 && rectTextura.w != 0 && rectTextura.h != 0)
+			pbody->texturaRect = rectTextura;
+		else {
+			pbody->texturaRect.x = x;
+			pbody->texturaRect.y = y;
+			pbody->texturaRect.w = width;
+			pbody->texturaRect.h = height;
+
+		}
+	}
+	App->scene_intro->circles.add(pbody);
 	return pbody;
 }
 

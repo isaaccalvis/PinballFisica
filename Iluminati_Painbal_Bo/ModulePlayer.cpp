@@ -19,7 +19,8 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
-
+	Circle_Texture = App->textures->Load("pinball/ball.png");
+	BarraInici_Texture = App->textures->Load("pinball/Barra.png");
 	//////////////////////////////////////////////////////////////////////////////
 
 
@@ -27,8 +28,9 @@ bool ModulePlayer::Start()
 	NewBall();
 
 
-	//Creacio Barra
-	PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody);
+	//Creacio Barra	
+	SDL_Rect rectBarraAux = { 0,0,10, 37 };
+	PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody,0, BarraInici_Texture, rectBarraAux);
 	PhysBody* baseBarra = App->physics->CreateRectangle(530, 780, 10, 10, b2_staticBody);
 
 	b2PrismaticJointDef prismaticJointDef;
@@ -44,7 +46,7 @@ bool ModulePlayer::Start()
 	barraInici = (b2PrismaticJoint*)App->physics->world->CreateJoint(&prismaticJointDef);
 	//~CreacioBarra
 
-	Circle_Texture = App->textures->Load("pinball/ball.png");
+
 	Circle_Rect = { 0,0,18,18 };
 	LOG("Loading player");
 	return true;

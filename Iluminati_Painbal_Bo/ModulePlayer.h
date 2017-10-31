@@ -38,6 +38,7 @@ public:
 	
 	//Barra inic
 	b2PrismaticJoint* barraInici;
+	SDL_Texture* BarraInici_Texture;
 
 	float left_rotation = 0;
 	float right_rotation = 0;
