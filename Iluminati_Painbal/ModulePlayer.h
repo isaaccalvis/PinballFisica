@@ -22,7 +22,7 @@ public:
 	PhysBody *Circle_Body;
 	b2Body *BarrBody;
 	//Barra inic
-	b2DistanceJoint* barraInici;
+	b2PrismaticJointDef* barraInici;
 
 	bool start = true;
 private:

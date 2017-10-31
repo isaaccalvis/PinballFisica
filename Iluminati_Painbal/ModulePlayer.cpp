@@ -18,7 +18,7 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
-	Circle_Body = App->physics->CreateCircle(530, 1600, 8, b2_dynamicBody);
+	Circle_Body = App->physics->CreateCircle(530, 600, 8, b2_dynamicBody);
 
 	//Creacio Barra
 	//b2BodyDef baseBarr;
@@ -36,16 +36,24 @@ bool ModulePlayer::Start()
 	//~CreacioBarra
 
 	//Creacio Barra Bona
-	PhysBody* actionBarra = App->physics->CreateRectangle(530, 750, 10, 10);
+	PhysBody* actionBarra = App->physics->CreateRectangle(530, 750, 10, 10, b2_dynamicBody);
 	PhysBody* baseBarra = App->physics->CreateRectangle(530, 780, 10, 10, b2_staticBody);
 
-	b2DistanceJointDef distanceJointDef;
-	distanceJointDef.Initialize(actionBarra->body, baseBarra->body, actionBarra->body->GetWorldCenter(), baseBarra->body->GetWorldCenter());
-	distanceJointDef.collideConnected = true;
-	
-	distanceJointDef.dampingRatio = 0.5f;
-	distanceJointDef.frequencyHz = 4.0f;
-	barraInici = (b2DistanceJoint*)App->physics->world->CreateJoint(&distanceJointDef);
+	//b2DistanceJointDef distanceJointDef;
+	b2PrismaticJointDef prismaticJointDef;
+	prismaticJointDef.Initialize(actionBarra->body, baseBarra->body, baseBarra->body->GetWorldCenter(), b2Vec2(0, 1));
+	prismaticJointDef.collideConnected = true;
+	prismaticJointDef.lowerTranslation = 0;
+	prismaticJointDef.upperTranslation = 0.5f;
+	prismaticJointDef.enableLimit = true;
+	prismaticJointDef.maxMotorForce = 10;
+	prismaticJointDef.motorSpeed = 1.0;
+	prismaticJointDef.enableMotor = true;
+	//prismaticJointDef.referenceAngle = -0.25f;
+
+	//distanceJointDef.dampingRatio = 0.5f;
+	//distanceJointDef.frequencyHz = 4.0f;
+	barraInici = (b2PrismaticJointDef*)App->physics->world->CreateJoint(&prismaticJointDef);
 
 	//~Creacio Barra Bona
 
@@ -65,28 +73,22 @@ update_status ModulePlayer::Update()
 	b2Vec2 vecGoDownBarr(0, -0.01f);
 	b2Vec2 vecGoUpBarr(0, 0.2f);
 	b2Vec2 vecGoStartBarr(PIXEL_TO_METERS(530), PIXEL_TO_METERS(770));
-	//printf_s("%f\n", BarrBody->GetPosition().y);
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && start) {
 		start = false;
-		Circle_Body->body->ApplyLinearImpulse({0, -5}, {0,0}, true);
-		//Line join
+		Circle_Body->body->ApplyLinearImpulse({ 0, -5 }, { 0,0 }, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT)
 		yBarraInicial += 0.1f;
-	//	if (BarrBody->GetPosition().y < 16.3f)
-	//		BarrBody->SetTransform(BarrBody->GetPosition() - vecGoDownBarr, 0);
-	}
-	else if (BarrBody->GetPosition().y > PIXEL_TO_METERS(770)) {
-		yBarraInicial -= 0.3f;
-	//	BarrBody->SetTransform(BarrBody->GetPosition() - vecGoUpBarr, 0);
-	}
-	else {
-	//	BarrBody->SetTransform(vecGoStartBarr, 0);
-	}
-	b2Vec2 moviment(0, yBarraInicial);
-	barraInici->GetBodyA()->ApplyForce(moviment, { 0, 0 }, true);
+	else
+		if (yBarraInicial != 0) {
+			b2Vec2 moviment(0, yBarraInicial);
+		//	barraInici->bodyA->ApplyForce(moviment, {0,0}, false);
+			barraInici->bodyA->SetTransform({1,0}, 0);
+			yBarraInicial = 0.0f;
+		}
+
 	return UPDATE_CONTINUE;
 }
 
