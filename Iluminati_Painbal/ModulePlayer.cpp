@@ -20,40 +20,20 @@ bool ModulePlayer::Start()
 {
 	Circle_Body = App->physics->CreateCircle(530, 600, 8, b2_dynamicBody);
 
-	//Creacio Barra
-	//b2BodyDef baseBarr;
-	//baseBarr.type = b2_staticBody;
-	//baseBarr.position.Set(PIXEL_TO_METERS(530), PIXEL_TO_METERS(770));
-	//b2PolygonShape shapePolygon;
-	//shapePolygon.SetAsBox(PIXEL_TO_METERS(10), PIXEL_TO_METERS(30), b2Vec2(0, 0), 0);
-	//b2Body *bodyBarr = App->physics->world->CreateBody(&baseBarr);
-	//BarrBody = bodyBarr;
-	//b2FixtureDef fixtureBarr;
-	//fixtureBarr.friction = 0.3f;
-	//fixtureBarr.density = 50;
-	//fixtureBarr.shape = &shapePolygon;
-	//bodyBarr->CreateFixture(&fixtureBarr);
-	//~CreacioBarra
-
-	//Creacio Barra Bona
 	PhysBody* actionBarra = App->physics->CreateRectangle(530, 750, 10, 10, b2_dynamicBody);
 	PhysBody* baseBarra = App->physics->CreateRectangle(530, 780, 10, 10, b2_staticBody);
 
-	//b2DistanceJointDef distanceJointDef;
 	b2PrismaticJointDef prismaticJointDef;
 	prismaticJointDef.Initialize(actionBarra->body, baseBarra->body, baseBarra->body->GetWorldCenter(), b2Vec2(0, 1));
 	prismaticJointDef.collideConnected = true;
 	prismaticJointDef.lowerTranslation = 0;
-	prismaticJointDef.upperTranslation = 0.5f;
+	prismaticJointDef.upperTranslation = 1.5f;
 	prismaticJointDef.enableLimit = true;
 	prismaticJointDef.maxMotorForce = 10;
-	prismaticJointDef.motorSpeed = 1.0;
+	prismaticJointDef.motorSpeed = 25.0;
 	prismaticJointDef.enableMotor = true;
-	//prismaticJointDef.referenceAngle = -0.25f;
 
-	//distanceJointDef.dampingRatio = 0.5f;
-	//distanceJointDef.frequencyHz = 4.0f;
-	barraInici = (b2PrismaticJointDef*)App->physics->world->CreateJoint(&prismaticJointDef);
+	barraInici = (b2PrismaticJoint*)App->physics->world->CreateJoint(&prismaticJointDef);
 
 	//~Creacio Barra Bona
 
@@ -76,16 +56,17 @@ update_status ModulePlayer::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && start) {
 		start = false;
-		Circle_Body->body->ApplyLinearImpulse({ 0, -5 }, { 0,0 }, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT)
-		yBarraInicial += 0.1f;
+	b2Vec2 moviment(0, yBarraInicial);
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT) {
+		yBarraInicial += 0.00001f;
+		barraInici->GetBodyA()->ApplyLinearImpulse(moviment, {0,0}, 0);
+		barraInici->EnableMotor(false);
+	}
 	else
 		if (yBarraInicial != 0) {
-			b2Vec2 moviment(0, yBarraInicial);
-		//	barraInici->bodyA->ApplyForce(moviment, {0,0}, false);
-			barraInici->bodyA->SetTransform({1,0}, 0);
+			barraInici->EnableMotor(true);
 			yBarraInicial = 0.0f;
 		}
 
