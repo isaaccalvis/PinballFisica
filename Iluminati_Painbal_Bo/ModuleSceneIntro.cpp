@@ -258,6 +258,11 @@ bool ModuleSceneIntro::Start()
 	diag_barraR = App->physics->CreateRectangle(390, 714, 9, 125, b2_staticBody, 1);
 	diag_barraL = App->physics->CreateRectangle(100, 714, 9, 125, b2_staticBody, -1);
 
+	Triangle_sens = App->physics->CreateRectangle(51, 343, 26, 20, b2_staticBody, 0);
+	Start_sens = App->physics->CreateRectangleSensor(525, 400, 20, 5);
+	L_Ball_sens = App->physics->CreateRectangleSensor(183, 220, 5, 15);
+	R_Ball_sens = App->physics->CreateRectangleSensor(353, 319, 15, 15);
+	Brindge_sens = App->physics->CreateRectangleSensor(85, 170, 28, 5);
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH/2, SCREEN_HEIGHT + SCREEN_HEIGHT/2, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	return ret;
@@ -297,8 +302,7 @@ update_status ModuleSceneIntro::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 9, b2_dynamicBody,0.1f));
-		circles.getLast()->data->listener = this;
+		App->player->NewBall(App->input->GetMouseX(), App->input->GetMouseY());
 	}
 
 

@@ -38,10 +38,16 @@ public:
 	PhysBody* palancaE;
 	PhysBody* barraL;
 	PhysBody* barraR;
-	PhysBody* sensor;
 	PhysBody* diag_barraR;
 	PhysBody* diag_barraL;
 	PhysBody* Bridge;
+
+	PhysBody* sensor;
+	PhysBody* Triangle_sens;
+	PhysBody* Brindge_sens;
+	PhysBody* L_Ball_sens;
+	PhysBody* R_Ball_sens;
+	PhysBody* Start_sens;
 
 	bool sensed;
 

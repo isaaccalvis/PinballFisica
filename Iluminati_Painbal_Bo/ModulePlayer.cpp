@@ -25,7 +25,7 @@ bool ModulePlayer::Start()
 
 
 	Stickers();
-	NewBall();
+	NewBall(530,600);
 
 
 	//Creacio Barra	
@@ -104,7 +104,7 @@ update_status ModulePlayer::Update()
 		die = false;
 		App->physics->world->DestroyBody(Circle_Body->body);
 		if (live > 0)
-			NewBall();
+			NewBall(530,600);
 		start = true;
 		live--;
 
@@ -121,6 +121,7 @@ bool ModulePlayer::CleanUp()
 }
 
 
+
 void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
@@ -129,10 +130,21 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		die = true;
 		//LOG("DIE");
 	}
+	else if (bodyB == App->scene_intro->Triangle_sens) {
+
+	}
+	if (bodyB == App->scene_intro->Brindge_sens) {
+		Circle_Body->body->ApplyLinearImpulse({ 0, -1 }, { 0,0 }, true);
+
+	}
+	if (bodyB == App->scene_intro->L_Ball_sens || bodyB == App->scene_intro->R_Ball_sens) {
+		Circle_Body->body->SetGravityScale(0);
+		Circle_Body->body->SetLinearVelocity({ 0,0 });
+	}
 }
 
-void ModulePlayer::NewBall() {
-	Circle_Body = App->physics->CreateCircle(530, 600, 8, b2_dynamicBody,0.1f);
+void ModulePlayer::NewBall(int x, int y) {
+	Circle_Body = App->physics->CreateCircle(x, y, 8, b2_dynamicBody,0.1f);
 	Circle_Body->listener = this;
 }
 
