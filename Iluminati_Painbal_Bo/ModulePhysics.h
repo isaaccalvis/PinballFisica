@@ -26,7 +26,7 @@ public:
 
 	SDL_Texture* texturaActual = nullptr;
 	SDL_Rect texturaRect;
-public:
+
 	int width, height;
 	b2Body* body;
 	Module* listener;

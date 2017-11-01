@@ -9,54 +9,45 @@
 #include "ModulePlayer.h"
 #include "ModuleSceneIntro.h"
 
-ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
-{
-}
+ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled){}
 
-ModulePlayer::~ModulePlayer()
-{}
+ModulePlayer::~ModulePlayer(){}
 
-// Load assets
 bool ModulePlayer::Start()
 {
-	Circle_Texture = App->textures->Load("pinball/ball.png");
-	BarraInici_Texture = App->textures->Load("pinball/Barra.png");
-	//////////////////////////////////////////////////////////////////////////////
-
-
+	//Circle_Texture = App->textures->Load("pinball/ball.png");
+	//BarraInici_Texture = App->textures->Load("pinball/Barra.png");
+	Circle_Texture = App->textures->Load("ball.png");
+	BarraInici_Texture = App->textures->Load("kk.png");
 	Stickers();
 	NewBall(530,600);
 
+	// CREAR BARRA
+	{
+		PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody, 0, BarraInici_Texture, SDL_Rect{ 0,0,10, 37 });
+		PhysBody* baseBarra = App->physics->CreateRectangle(530, 780, 10, 10, b2_staticBody);
 
-	//Creacio Barra	
-	SDL_Rect rectBarraAux = { 0,0,10, 37 };
-	PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody,0, BarraInici_Texture, rectBarraAux);
-	PhysBody* baseBarra = App->physics->CreateRectangle(530, 780, 10, 10, b2_staticBody);
+		b2PrismaticJointDef prismaticJointDef;
+		prismaticJointDef.Initialize(actionBarra->body, baseBarra->body, baseBarra->body->GetWorldCenter(), b2Vec2(0, 1));
+		prismaticJointDef.collideConnected = true;
+		prismaticJointDef.lowerTranslation = 0;
+		prismaticJointDef.upperTranslation = 1.5f;
+		prismaticJointDef.enableLimit = true;
+		prismaticJointDef.maxMotorForce = 28;
+		prismaticJointDef.motorSpeed = 38.0;
+		prismaticJointDef.enableMotor = true;
 
-	b2PrismaticJointDef prismaticJointDef;
-	prismaticJointDef.Initialize(actionBarra->body, baseBarra->body, baseBarra->body->GetWorldCenter(), b2Vec2(0, 1));
-	prismaticJointDef.collideConnected = true;
-	prismaticJointDef.lowerTranslation = 0;
-	prismaticJointDef.upperTranslation = 1.5f;
-	prismaticJointDef.enableLimit = true;
-	prismaticJointDef.maxMotorForce = 28;
-	prismaticJointDef.motorSpeed = 38.0;
-	prismaticJointDef.enableMotor = true;
-
-	barraInici = (b2PrismaticJoint*)App->physics->world->CreateJoint(&prismaticJointDef);
-	//~CreacioBarra
-
+		barraInici = (b2PrismaticJoint*)App->physics->world->CreateJoint(&prismaticJointDef);
+	}
+	// ~CREAR BARRA
 
 	Circle_Rect = { 0,0,18,18 };
-	LOG("Loading player");
 	return true;
 }
 
-// Update: draw background
 // TXELL SEXY
 update_status ModulePlayer::Update()
 {
-
 	left_rotation = RADTODEG * left_joint->GetJointAngle();
 	right_rotation = RADTODEG * right_joint->GetJointAngle();
 
@@ -86,18 +77,12 @@ update_status ModulePlayer::Update()
 			barraInici->EnableMotor(true);
 			yBarraInicial = 0.0f;
 		}
-	////////////////////////////
-	int x, y;
-	Circle_Body->GetPosition(x, y);
-	App->renderer->Blit(Circle_Texture, METERS_TO_PIXELS(x), METERS_TO_PIXELS(y), &Circle_Rect);
-	b2Vec2 vecGoDownBarr(0, -0.01f);
-	b2Vec2 vecGoUpBarr(0, 0.2f);
-	b2Vec2 vecGoStartBarr(PIXEL_TO_METERS(530), PIXEL_TO_METERS(770));
+	// ~MOVIMENT BARRA INICIAL
 
+	
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && start) {
 		start = false;
 		Circle_Body->body->ApplyLinearImpulse({0, -3.5f}, {0,0}, true);
-		//Line join
 	}
 
 	if (die) {
@@ -112,11 +97,9 @@ update_status ModulePlayer::Update()
 	return UPDATE_CONTINUE;
 }
 
-// Unload assets
 bool ModulePlayer::CleanUp()
 {
-	LOG("Unloading player");
-
+	// Unload assets
 	return true;
 }
 
@@ -128,7 +111,6 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	if (bodyB == App->scene_intro->sensor) {
 		die = true;
-		//LOG("DIE");
 	}
 	else if (bodyB == App->scene_intro->Triangle_sens) {
 

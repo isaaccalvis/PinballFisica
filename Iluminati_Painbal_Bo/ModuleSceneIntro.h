@@ -18,9 +18,10 @@ public:
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 public:
-	p2List<PhysBody*> circles;
-	p2List<PhysBody*> boxes;
-	p2List<PhysBody*> ricks;
+	p2List<PhysBody*> physList;
+	//p2List<PhysBody*> circles;
+	//p2List<PhysBody*> boxes;
+	//p2List<PhysBody*> ricks;
 
 	PhysBody* BG;
 	PhysBody* placaE;

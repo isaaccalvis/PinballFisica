@@ -19,13 +19,10 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	r.h = SCREEN_HEIGHT;
 }
 
-ModuleSceneIntro::~ModuleSceneIntro()
-{}
+ModuleSceneIntro::~ModuleSceneIntro() {}
 
-// Load assets
 bool ModuleSceneIntro::Start()
 {
-	LOG("Loading Intro assets");
 	bool ret = true;
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
@@ -34,7 +31,6 @@ bool ModuleSceneIntro::Start()
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
-
 
 	fons = App->textures->Load("pinball/BG.png");
 	kicker_L = App->textures->Load("pinball/kicker_L.png");
@@ -233,10 +229,6 @@ bool ModuleSceneIntro::Start()
 		237, 18
 	};
 
-
-
-
-	
 	BG = App->physics->CreateChain(0, 0, bg, 100, b2_staticBody, 0.1f);
 	placaE = App->physics->CreateChain(0, 0, plac_L, 16, b2_staticBody, 2);
 	placaD = App->physics->CreateChain(0, 0, plac_R, 18, b2_staticBody, 2);
@@ -271,18 +263,15 @@ bool ModuleSceneIntro::Start()
 // Load assets
 bool ModuleSceneIntro::CleanUp()
 {
-	LOG("Unloading Intro scene");
 	App->textures->Unload(fons);
 	App->textures->Unload(kicker_L);
 	App->textures->Unload(kicker_R);
-
 	return true;
 }
 
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		App->renderer->camera.y -= 4;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
@@ -291,25 +280,20 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->camera.x += 4;
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		App->renderer->camera.x -= 4;
-
-
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
+	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		App->player->NewBall(App->input->GetMouseX(), App->input->GetMouseY());
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		ray_on = !ray_on;
 		ray.x = App->input->GetMouseX();
 		ray.y = App->input->GetMouseY();
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		App->player->NewBall(App->input->GetMouseX(), App->input->GetMouseY());
-	}
-
-
-
+	// PRINTAR EL MAPA
+	App->renderer->Blit(fons, 0, 0, &r);
+	App->renderer->Blit(kicker_L, 82, 700, NULL, 1.0f, App->player->left_rotation);
+	App->renderer->Blit(kicker_R, 276, 700, NULL, 1.0f, App->player->right_rotation);
 
 	// Prepare for raycast ------------------------------------------------------
-	
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
 	mouse.y = App->input->GetMouseY();
@@ -318,47 +302,56 @@ update_status ModuleSceneIntro::Update()
 	fVector normal(0.0f, 0.0f);
 
 	// All draw functions ------------------------------------------------------
-	p2List_item<PhysBody*>* c = circles.getFirst();
+	p2List_item<PhysBody*>* recList = physList.getFirst();
 
-	while(c != NULL)
+	while (recList != NULL)
 	{
-		if (c->data->texturaActual != nullptr) {
-			App->renderer->Blit(c->data->texturaActual, c->data->body->GetPosition().x, c->data->body->GetPosition().y, &c->data->texturaRect);
+		if (recList->data->texturaActual != nullptr) {
+			int x, y;
+			recList->data->GetPosition(x, y);
+			SDL_Rect re{ 0, 0, 400, 400 };
+			printf_s("%i %i\n", &recList->data->texturaRect.x, &recList->data->texturaRect.w);
+			App->renderer->Blit(recList->data->texturaActual, x, y, &re);
 		}
-		//int x, y;
-		//c->data->GetPosition(x, y);
-		//if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
-		//	App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
+		recList = recList->next;
 	}
 
-	c = boxes.getFirst();
+	//p2List_item<PhysBody*>* c = circles.getFirst();
+	//while(c != NULL)
+	//{
+	//	if (c->data->texturaActual != nullptr) {
+	//		App->renderer->Blit(c->data->texturaActual, c->data->body->GetPosition().x, c->data->body->GetPosition().y, &c->data->texturaRect);
+	//	}
+	//	int x, y;
+	//	c->data->GetPosition(x, y);
+	//	if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
+	//		App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
+	//	c = c->next;
+	//}
 
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
-		if(ray_on)
-		{
-			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
-			if(hit >= 0)
-				ray_hit = hit;
-		}
-		c = c->next;
-	}
+	//c = boxes.getFirst();
+	//while(c != NULL)
+	//{
+	//	int x, y;
+	//	c->data->GetPosition(x, y);
+	//	App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
+	//	if(ray_on)
+	//	{
+	//		int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
+	//		if(hit >= 0)
+	//			ray_hit = hit;
+	//	}
+	//	c = c->next;
+	//}
 
-	c = ricks.getFirst();
-
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
-
-
+	//c = ricks.getFirst();
+	//while(c != NULL)
+	//{
+	//	int x, y;
+	//	c->data->GetPosition(x, y);
+	//	App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
+	//	c = c->next;
+	//}
 
 	// ray -----------------
 	if(ray_on == true)
@@ -373,11 +366,6 @@ update_status ModuleSceneIntro::Update()
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
 
-
-
-	App->renderer->Blit(fons, 0, 0, &r);
-	App->renderer->Blit(kicker_L, 82, 700, NULL, 1.0f, App->player->left_rotation);
-	App->renderer->Blit(kicker_R, 276, 700, NULL, 1.0f, App->player->right_rotation);
 	return UPDATE_CONTINUE;
 }
 

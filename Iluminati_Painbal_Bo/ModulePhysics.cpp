@@ -20,23 +20,16 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 	debug = true;
 }
 
-// Destructor
-ModulePhysics::~ModulePhysics()
-{
-}
+ModulePhysics::~ModulePhysics(){}
 
 bool ModulePhysics::Start()
 {
-	LOG("Creating Physics 2D environment");
-
 	world = new b2World(b2Vec2(GRAVITY_X, -GRAVITY_Y));
 	world->SetContactListener(this);
 
-	// needed to create joints like mouse joint
 	b2BodyDef bd;
 	ground = world->CreateBody(&bd);
 
-	// big static circle as "ground" in the middle of the screen
 	int x = SCREEN_WIDTH / 2;
 	int y = SCREEN_HEIGHT / 1.5f;
 	int diameter = SCREEN_WIDTH / 2;
@@ -44,7 +37,6 @@ bool ModulePhysics::Start()
 	return true;
 }
 
-// 
 update_status ModulePhysics::PreUpdate()
 {
 	world->Step(1.0f / 60.0f, 6, 2);
@@ -77,7 +69,6 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type,
 	fixture.shape = &shape;
 	fixture.density = 3;
 	fixture.restitution = res;
-
 
 	b->CreateFixture(&fixture);
 
@@ -116,8 +107,12 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 
 	if (textura != nullptr) {
 		pbody->texturaActual = textura;
-		if (rectTextura.x != 0 && rectTextura.y != 0 && rectTextura.w != 0 && rectTextura.h != 0)
-			pbody->texturaRect = rectTextura;
+		if (rectTextura.x != 0 || rectTextura.y != 0 || rectTextura.w != 0 || rectTextura.h != 0) {
+			pbody->texturaRect.x = rectTextura.x;
+			pbody->texturaRect.y = rectTextura.y;
+			pbody->texturaRect.w = rectTextura.w;
+			pbody->texturaRect.h = rectTextura.h;
+		}
 		else {
 			pbody->texturaRect.x = x;
 			pbody->texturaRect.y = y;
@@ -126,7 +121,7 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 
 		}
 	}
-	App->scene_intro->circles.add(pbody);
+	App->scene_intro->physList.add(pbody);
 	return pbody;
 }
 
@@ -256,7 +251,7 @@ PhysBody * ModulePhysics::CreateRightSticker()
 
 	return pbody;
 }
-// 
+
 update_status ModulePhysics::PostUpdate()
 {
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -265,8 +260,6 @@ update_status ModulePhysics::PostUpdate()
 	if(!debug)
 		return UPDATE_CONTINUE;
 
-	// Bonus code: this will iterate all objects in the world and draw the circles
-	// You need to provide your own macro to translate meters to pixels
 	b2Body* body = NULL;
 	b2Vec2 mouse;
 
@@ -280,7 +273,6 @@ update_status ModulePhysics::PostUpdate()
 		{
 			switch(f->GetType())
 			{
-				// Draw circles ------------------------------------------------
 				case b2Shape::e_circle:
 				{
 					b2CircleShape* shape = (b2CircleShape*)f->GetShape();
@@ -329,7 +321,6 @@ update_status ModulePhysics::PostUpdate()
 				}
 				break;
 
-				// Draw a single segment(edge) ----------------------------------
 				case b2Shape::e_edge:
 				{
 					b2EdgeShape* shape = (b2EdgeShape*)f->GetShape();
@@ -342,20 +333,13 @@ update_status ModulePhysics::PostUpdate()
 				break;
 			}
 
-			// TODO 1: If mouse button 1 is pressed ...
 			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN) {
 				if (f->TestPoint(mouse))
 					body = b;
 
 			}
-			// test if the current body contains mouse position
 		}
 	}
-
-	// If a body was selected we will attach a mouse joint to it
-	// so we can pull it around
-	// TODO 2: If a body was selected, create a mouse joint
-	// using mouse_joint class property
 
 	if (body != NULL) {
 		b2MouseJointDef def;
@@ -368,8 +352,6 @@ update_status ModulePhysics::PostUpdate()
 		mouse_joint = (b2MouseJoint*)world->CreateJoint(&def);
 	}
 
-	// TODO 3: If the player keeps pressing the mouse button, update
-	// target position and draw a red line between both anchor points.
 	if (mouse_joint != nullptr && App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 
 		 
@@ -380,20 +362,13 @@ update_status ModulePhysics::PostUpdate()
 
 	}
 
-	// TODO 4: If the player releases the mouse button, destroy the joint
-
 	return UPDATE_CONTINUE;
 }
 
 
-// Called before quitting
 bool ModulePhysics::CleanUp()
 {
-	LOG("Destroying physics world");
-
-	// Delete the whole physics world!
 	delete world;
-
 	return true;
 }
 
@@ -442,7 +417,6 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 	{
 		if(fixture->GetShape()->RayCast(&output, input, body->GetTransform(), 0) == true)
 		{
-			// do we want the normal ?
 
 			float fx = x2 - x1;
 			float fy = y2 - y1;
