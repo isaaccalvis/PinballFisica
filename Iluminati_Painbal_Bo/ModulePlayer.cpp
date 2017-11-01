@@ -15,6 +15,8 @@ ModulePlayer::~ModulePlayer(){}
 
 bool ModulePlayer::Start()
 {
+	Bridge = Wall;
+
 	//Circle_Texture = App->textures->Load("pinball/ball.png");
 	//BarraInici_Texture = App->textures->Load("pinball/Barra.png");
 	Circle_Texture = App->textures->Load("ball.png");
@@ -48,6 +50,8 @@ bool ModulePlayer::Start()
 // TXELL SEXY
 update_status ModulePlayer::Update()
 {
+	currentTime = SDL_GetTicks();
+
 	left_rotation = RADTODEG * left_joint->GetJointAngle();
 	right_rotation = RADTODEG * right_joint->GetJointAngle();
 
@@ -78,22 +82,82 @@ update_status ModulePlayer::Update()
 			yBarraInicial = 0.0f;
 		}
 	// ~MOVIMENT BARRA INICIAL
-
 	
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && start) {
-		start = false;
-		Circle_Body->body->ApplyLinearImpulse({0, -3.5f}, {0,0}, true);
+	if (started && barrier) {
+		started = false;
+		barrier = false;
+		Quad_Started = App->physics->CreateRectangle(527, 415, 34, 5, b2_staticBody, -0.5f);
 	}
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
+		Circle_Body->body->ApplyLinearImpulse({0, -3.5f}, {0,0}, true);
 
 	if (die) {
 		die = false;
+		barrier = true;
 		App->physics->world->DestroyBody(Circle_Body->body);
+	//	App->physics->world->DestroyBody(Quad_Started->body);
 		if (live > 0)
 			NewBall(530,600);
-		start = true;
 		live--;
-
 	}
+
+	if (Sens_L) {
+		int _X, _Y;
+		Circle_Body->GetPosition(_X, _Y);
+		if (_X == 160 && _Y == 211)
+			Circle_Body->body->SetLinearVelocity({ 0,0 });
+		else if (_X > 160)
+			Circle_Body->body->SetLinearVelocity({ -1,0 });
+		else if (_X < 160)
+			Circle_Body->body->SetLinearVelocity({ 1,0 });
+		else if (_Y > 211)
+			Circle_Body->body->SetLinearVelocity({ 0,-1 });
+		else if (_Y < 211)
+			Circle_Body->body->SetLinearVelocity({ 0,1 });
+	}
+
+	if (Sens_R) {
+		int _X, _Y;
+		Circle_Body->GetPosition(_X, _Y);
+		if (_X == 345 && _Y == 311)
+			Circle_Body->body->SetLinearVelocity({ 0,0 });
+		else if (_X > 345)
+			Circle_Body->body->SetLinearVelocity({ -1,0 });
+		else if (_X < 345)
+			Circle_Body->body->SetLinearVelocity({ 1,0 });
+		else if (_Y > 311)
+			Circle_Body->body->SetLinearVelocity({ 0,-1 });
+		else if (_Y < 311)
+			Circle_Body->body->SetLinearVelocity({ 0,1 });
+	}
+
+	currentTime = SDL_GetTicks() - lastTime;
+	if ((Sens_L || Sens_R) && currentTime > 1000) {
+		Circle_Body->body->SetGravityScale(1);
+		if (Sens_L) {
+			Circle_Body->body->ApplyLinearImpulse({ -1.5f, 4 }, { 0,0 }, true);
+			Sens_L = false;
+		}
+		else if (Sens_R) {
+			Sens_R = false;
+			Circle_Body->body->ApplyLinearImpulse({ -1.3f, 3 }, { 0,0 }, true);
+
+		}
+	}
+
+	if (Bridge == Wall) {
+		Quad_Bridge = App->physics->CreateRectangle(250, 35, 5, 38, b2_staticBody, -0.7f);
+		Bridge = Idle;
+	}
+	else if (Bridge == Destroy) {
+		App->physics->world->DestroyBody(Quad_Bridge->body);
+		Bridge = Rebuild;
+		buildTime = SDL_GetTicks();
+	}
+	currentTime = SDL_GetTicks() - buildTime;
+	if (Bridge == Rebuild && currentTime > 2000)
+		Bridge = Wall;
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -112,17 +176,38 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyB == App->scene_intro->sensor) {
 		die = true;
 	}
-	else if (bodyB == App->scene_intro->Triangle_sens) {
+	else if (bodyB == App->scene_intro->Triangle_sens)
+		Score += 200;
 
+	else if (bodyB == App->scene_intro->Brindge_sens) {
+		if(Circle_Body->body->GetLinearVelocity().y > -4)
+			Circle_Body->body->ApplyLinearImpulse({ 0, -1.5 }, { 0,0 }, true);
+		else
+			Circle_Body->body->ApplyLinearImpulse({ 0, -1 }, { 0,0 }, true);
+		Score += 300;
+		Bridge = BrirgeWall::Destroy;
 	}
-	if (bodyB == App->scene_intro->Brindge_sens) {
+	else if (bodyB == App->scene_intro->Tub_sens) {
 		Circle_Body->body->ApplyLinearImpulse({ 0, -1 }, { 0,0 }, true);
-
+		Score += 400;
 	}
-	if (bodyB == App->scene_intro->L_Ball_sens || bodyB == App->scene_intro->R_Ball_sens) {
+	else if (bodyB == App->scene_intro->L_Ball_sens || bodyB == App->scene_intro->R_Ball_sens) {
 		Circle_Body->body->SetGravityScale(0);
-		Circle_Body->body->SetLinearVelocity({ 0,0 });
+		lastTime = SDL_GetTicks();
+		Score += 100;
+		if (bodyB == App->scene_intro->L_Ball_sens)
+			Sens_L = true;
+		else if (bodyB == App->scene_intro->R_Ball_sens)
+			Sens_R = true;
 	}
+
+	else if (bodyB == App->scene_intro->BallU || bodyB == App->scene_intro->BallD || bodyB == App->scene_intro->BallE || bodyB == App->scene_intro->BallB)
+		Score += 5;
+	else if (bodyB == App->scene_intro->BallG)
+		Score += 10;
+
+	else if (bodyB == App->scene_intro->Start_sens && barrier)
+		started = true;
 }
 
 void ModulePlayer::NewBall(int x, int y) {

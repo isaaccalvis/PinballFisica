@@ -252,10 +252,14 @@ bool ModuleSceneIntro::Start()
 
 	Triangle_sens = App->physics->CreateRectangle(51, 343, 26, 20, b2_staticBody, 0);
 	Start_sens = App->physics->CreateRectangleSensor(525, 400, 20, 5);
-	L_Ball_sens = App->physics->CreateRectangleSensor(183, 220, 5, 15);
-	R_Ball_sens = App->physics->CreateRectangleSensor(353, 319, 15, 15);
-	Brindge_sens = App->physics->CreateRectangleSensor(85, 170, 28, 5);
+	L_Ball_sens = App->physics->CreateRectangleSensor(168, 219, 7, 7);
+	R_Ball_sens = App->physics->CreateRectangleSensor(353, 319, 7, 7);
+	Brindge_sens = App->physics->CreateRectangleSensor(85, 170, 28, 5);	
+	Tub_sens = App->physics->CreateRectangleSensor(407, 335, 28, 5);
+
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH/2, SCREEN_HEIGHT + SCREEN_HEIGHT/2, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+
 
 	return ret;
 }
@@ -266,28 +270,32 @@ bool ModuleSceneIntro::CleanUp()
 	App->textures->Unload(fons);
 	App->textures->Unload(kicker_L);
 	App->textures->Unload(kicker_R);
+	App->textures->Unload(circle);
+	App->textures->Unload(box);
+	App->textures->Unload(rick);
 	return true;
 }
 
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	/*if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		App->renderer->camera.y -= 4;
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		App->renderer->camera.y += 4;
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		App->renderer->camera.x += 4;
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		App->renderer->camera.x -= 4;
+		App->renderer->camera.x -= 4;*/
+
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		App->player->NewBall(App->input->GetMouseX(), App->input->GetMouseY());
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	/*if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		ray_on = !ray_on;
 		ray.x = App->input->GetMouseX();
 		ray.y = App->input->GetMouseY();
 	}
-
+	*/
 	// PRINTAR EL MAPA
 	App->renderer->Blit(fons, 0, 0, &r);
 	App->renderer->Blit(kicker_L, 82, 700, NULL, 1.0f, App->player->left_rotation);

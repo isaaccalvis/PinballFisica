@@ -24,6 +24,9 @@ public:
 
 public:
 
+	PhysBody* Quad_Started;
+	PhysBody* Quad_Bridge;
+
 	PhysBody* Fliper_R;
 	PhysBody* Fliper_L;
 	b2Body* body_FliperR;
@@ -32,10 +35,27 @@ public:
 	b2RevoluteJoint* right_joint;
 
 	PhysBody *Circle_Body;
-	bool start = true;
 	int live = 3;
 	bool die = false;
+	bool started = false;
+	bool barrier = true;
 	
+	
+	bool Sens_L = false;
+	bool Sens_R = false;
+	uint currentTime, lastTime, buildTime;
+
+	int Bridge;
+	enum BrirgeWall
+	{
+		Wall,
+		Destroy,
+		Idle,	
+		Rebuild,
+	};
+
+	int Score;
+
 	//Barra inic
 	b2PrismaticJoint* barraInici;
 	SDL_Texture* BarraInici_Texture;

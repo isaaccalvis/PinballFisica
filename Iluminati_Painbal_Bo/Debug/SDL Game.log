@@ -1,15 +1,6 @@
-﻿  ModulePhysics.cpp
-a:\projects\visual studio projects\vs c++ projects\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(34): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
-a:\projects\visual studio projects\vs c++ projects\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(105): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-a:\projects\visual studio projects\vs c++ projects\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(106): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-a:\projects\visual studio projects\vs c++ projects\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(166): warning C4018: '<': no coinciden signed/unsigned
-a:\projects\visual studio projects\vs c++ projects\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(216): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-a:\projects\visual studio projects\vs c++ projects\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(217): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-a:\projects\visual studio projects\vs c++ projects\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(361): warning C4244: 'argumento': conversión de 'float32' a 'int'; posible pérdida de datos
-a:\projects\visual studio projects\vs c++ projects\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(361): warning C4244: 'argumento': conversión de 'const float32' a 'int'; posible pérdida de datos
-a:\projects\visual studio projects\vs c++ projects\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(421): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-a:\projects\visual studio projects\vs c++ projects\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(422): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-a:\projects\visual studio projects\vs c++ projects\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(428): warning C4244: 'return': conversión de 'float32' a 'int'; posible pérdida de datos
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\cmath(131): warning C4577: si se usa 'noexcept' sin ningún modo de control de excepciones especificado, la finalización de la excepción no está garantizada. Especifique /EHsc
-  SDL Game.vcxproj -> A:\Projects\Visual Studio Projects\VS C++ Projects\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.exe
-  SDL Game.vcxproj -> A:\Projects\Visual Studio Projects\VS C++ Projects\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.pdb (Full PDB)
+﻿  ModulePlayer.cpp
+c:\users\aleixg\desktop\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(174): warning C4101: 'y': unreferenced local variable
+c:\users\aleixg\desktop\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(174): warning C4101: 'x': unreferenced local variable
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\limits(210): warning C4577: 'noexcept' used with no exception handling mode specified; termination on exception is not guaranteed. Specify /EHsc
+  SDL Game.vcxproj -> C:\Users\AleixG\Desktop\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.exe
+  SDL Game.vcxproj -> C:\Users\AleixG\Desktop\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.pdb (Full PDB)
