@@ -19,9 +19,6 @@ public:
 
 public:
 	p2List<PhysBody*> physList;
-	//p2List<PhysBody*> circles;
-	//p2List<PhysBody*> boxes;
-	//p2List<PhysBody*> ricks;
 
 	PhysBody* BG;
 	PhysBody* placaE;
@@ -59,6 +56,7 @@ public:
 	SDL_Rect r;
 	SDL_Texture* box;
 	SDL_Texture* rick;
+	SDL_Texture* circles_Texture_Type1Col;
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;

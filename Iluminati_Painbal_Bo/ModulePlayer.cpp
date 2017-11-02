@@ -15,16 +15,15 @@ ModulePlayer::~ModulePlayer(){}
 
 bool ModulePlayer::Start()
 {
-	//Circle_Texture = App->textures->Load("pinball/ball.png");
-	//BarraInici_Texture = App->textures->Load("pinball/Barra.png");
-	Circle_Texture = App->textures->Load("ball.png");
-	BarraInici_Texture = App->textures->Load("kk.png");
+	pilota_Texture = App->textures->Load("pinball/ball.png");
+	BarraInici_Texture = App->textures->Load("pinball/Barra.png");
 	Stickers();
-	NewBall(530,600);
+	//NewBall(530,600);
+	Circle_Body = App->physics->CreateCircle(530, 600, 8, b2_dynamicBody, 0.1f, pilota_Texture, SDL_Rect{ 0,0,16,16 });
 
 	// CREAR BARRA
 	{
-		PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody, 0, BarraInici_Texture, SDL_Rect{ 0,0,10, 37 });
+		PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody, 0, BarraInici_Texture, SDL_Rect{ 0,0,20, 98 });
 		PhysBody* baseBarra = App->physics->CreateRectangle(530, 780, 10, 10, b2_staticBody);
 
 		b2PrismaticJointDef prismaticJointDef;
@@ -40,8 +39,6 @@ bool ModulePlayer::Start()
 		barraInici = (b2PrismaticJoint*)App->physics->world->CreateJoint(&prismaticJointDef);
 	}
 	// ~CREAR BARRA
-
-	Circle_Rect = { 0,0,18,18 };
 	return true;
 }
 

@@ -31,6 +31,7 @@ bool ModuleSceneIntro::Start()
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+	circles_Texture_Type1Col = App->textures->Load("pinball/Barra.png");
 
 	fons = App->textures->Load("pinball/BG.png");
 	kicker_L = App->textures->Load("pinball/kicker_L.png");
@@ -309,9 +310,9 @@ update_status ModuleSceneIntro::Update()
 		if (recList->data->texturaActual != nullptr) {
 			int x, y;
 			recList->data->GetPosition(x, y);
+			printf_s("%i \n", recList->data->texturaRect);
 			SDL_Rect re{ 0, 0, 400, 400 };
-			printf_s("%i %i\n", &recList->data->texturaRect.x, &recList->data->texturaRect.w);
-			App->renderer->Blit(recList->data->texturaActual, x, y, &re);
+			App->renderer->Blit(recList->data->texturaActual, x + 1, y, &recList->data->texturaRect);
 		}
 		recList = recList->next;
 	}

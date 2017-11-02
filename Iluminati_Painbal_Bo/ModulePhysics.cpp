@@ -55,11 +55,19 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type, float res)
+void PhysBody::canviarTextura(int newX, int newY, SDL_Texture* newTexture, SDL_Rect newRect) {
+	this->body->SetTransform(b2Vec2(newX, newY),0);
+	texturaRect = newRect;
+	texturaActual = newTexture;
+}
+
+
+PhysBody*  ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type, float res, SDL_Texture* textura, SDL_Rect rectTextura)
 {
 	b2BodyDef body;
 	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	body.bullet = true;
 
 	b2Body* b = world->CreateBody(&body);
 
@@ -77,6 +85,22 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type,
 	b->SetUserData(pbody);
 	pbody->width = pbody->height = radius;
 
+	if (textura != nullptr) {
+		pbody->texturaActual = textura;
+		if (rectTextura.x != 0 || rectTextura.y != 0 || rectTextura.w != 0 || rectTextura.h != 0) {
+			pbody->texturaRect.x = rectTextura.x;
+			pbody->texturaRect.y = rectTextura.y;
+			pbody->texturaRect.w = rectTextura.w;
+			pbody->texturaRect.h = rectTextura.h;
+		}
+		else {
+			pbody->texturaRect.x = x;
+			pbody->texturaRect.y = y;
+			pbody->texturaRect.w = radius;
+			pbody->texturaRect.h = radius;
+		}
+	}
+	App->scene_intro->physList.add(pbody);
 	return pbody;
 }
 
@@ -118,9 +142,9 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 			pbody->texturaRect.y = y;
 			pbody->texturaRect.w = width;
 			pbody->texturaRect.h = height;
-
 		}
 	}
+
 	App->scene_intro->physList.add(pbody);
 	return pbody;
 }

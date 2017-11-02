@@ -18,12 +18,7 @@ public:
 	void NewBall(int x, int y);
 	void Stickers();
 
-
-	SDL_Texture* Circle_Texture;
-	SDL_Rect Circle_Rect;
-
 public:
-
 	PhysBody* Fliper_R;
 	PhysBody* Fliper_L;
 	b2Body* body_FliperR;
@@ -39,6 +34,7 @@ public:
 	//Barra inic
 	b2PrismaticJoint* barraInici;
 	SDL_Texture* BarraInici_Texture;
+	SDL_Texture* pilota_Texture;
 
 	float left_rotation = 0;
 	float right_rotation = 0;

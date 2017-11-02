@@ -23,6 +23,7 @@ public:
 	float GetRotation() const;
 	bool Contains(int x, int y) const;
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
+	void canviarTextura(int newX, int newY, SDL_Texture* newTexture, SDL_Rect newRect);
 
 	SDL_Texture* texturaActual = nullptr;
 	SDL_Rect texturaRect;
@@ -45,7 +46,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type, float res);
+	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type, float res = 0, SDL_Texture* textura = nullptr, SDL_Rect rectTextura = { 0,0,0,0 });
 	PhysBody* CreateRectangle(int x, int y, int width, int height, b2BodyType type, float angle = 0, SDL_Texture* textura = nullptr, SDL_Rect rectTextura = {0,0,0,0});
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size, b2BodyType type, float res);
