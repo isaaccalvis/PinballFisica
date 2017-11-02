@@ -20,8 +20,6 @@ bool ModulePlayer::Start()
 	pilota_Texture = App->textures->Load("pinball/ball.png");
 	BarraInici_Texture = App->textures->Load("pinball/Barra.png");
 
-	//Audio
-
 	Bridge_A = App->audio->LoadFx("pinball/Bridge.wav");
 	Bonus_A = App->audio->LoadFx("pinball/Bonus_Ball.wav");
 	Tub_A = App->audio->LoadFx("pinball/Tub.wav");
@@ -36,15 +34,12 @@ bool ModulePlayer::Start()
 	Stickers();
 	NewBall(530,600);
 
-
-
 	Quad_Started = App->physics->CreateRectangle(527, 415, 34, 5, b2_staticBody, -0.5f);
 	Quad_Started->body->SetActive(false);
 
 	return true;
 }
 
-// TXELL SEXY
 update_status ModulePlayer::Update()
 {
 	currentTime = SDL_GetTicks();
@@ -61,17 +56,17 @@ update_status ModulePlayer::Update()
 		left_joint->SetMotorSpeed(-15);
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 			App->audio->PlayFx(Sticker_A);
-
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		right_joint->EnableMotor(true);
 		right_joint->SetMaxMotorTorque(700);
 		right_joint->SetMotorSpeed(15);
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 		App->audio->PlayFx(Sticker_A);
 
-	// MOVIMENT BARRA INICIAL
 	b2Vec2 moviment(0, yBarraInicial);
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT) {
 		yBarraInicial += 0.00001f;
@@ -89,7 +84,6 @@ update_status ModulePlayer::Update()
 		started = false;
 		barrier = false;
 		Quad_Started->body->SetActive(true);
-		//Quad_Started = App->physics->CreateRectangle(527, 415, 34, 5, b2_staticBody, -0.5f);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
 		Circle_Body->body->ApplyLinearImpulse({0, -3.5f}, {0,0}, true);
@@ -99,7 +93,6 @@ update_status ModulePlayer::Update()
 		barrier = true;
 		App->audio->PlayFx(Died_A);
 		App->physics->world->DestroyBody(Circle_Body->body);
-		//App->physics->world->DestroyBody(Quad_Started->body);
 		Quad_Started->body->SetActive(false);
 		if (live > 0)
 			NewBall(530,600);
@@ -181,7 +174,6 @@ update_status ModulePlayer::Update()
 bool ModulePlayer::CleanUp()
 {
 
-// Unload assets
 	return true;
 }
 
@@ -329,7 +321,6 @@ void ModulePlayer::Stickers() {
 	Fliper_R = App->physics->CreateRightSticker();
 
 	// Set Right Joint
-
 	b2RevoluteJointDef joint_right_def;
 	joint_right_def.bodyA = body_FliperR;
 	joint_right_def.bodyB = Fliper_R->body;

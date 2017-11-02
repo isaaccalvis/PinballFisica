@@ -18,7 +18,7 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 {
 	world = NULL;
 	mouse_joint = NULL;
-	debug = true;
+	debug = false;
 }
 
 ModulePhysics::~ModulePhysics(){}
@@ -272,6 +272,23 @@ PhysBody * ModulePhysics::CreateRightSticker()
 	return pbody;
 }
 
+b2PrismaticJoint* ModulePhysics::CreateBarraInici() {
+	PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody, 0, App->player->BarraInici_Texture, SDL_Rect{ 0,0,20, 98 });
+	PhysBody* baseBarra = App->physics->CreateRectangle(530, 780, 10, 10, b2_staticBody);
+
+	b2PrismaticJointDef prismaticJointDef;
+	prismaticJointDef.Initialize(actionBarra->body, baseBarra->body, baseBarra->body->GetWorldCenter(), b2Vec2(0, 1));
+	prismaticJointDef.collideConnected = true;
+	prismaticJointDef.lowerTranslation = 0;
+	prismaticJointDef.upperTranslation = 1.5f;
+	prismaticJointDef.enableLimit = true;
+	prismaticJointDef.maxMotorForce = 39;
+	prismaticJointDef.motorSpeed = 38.0;
+	prismaticJointDef.enableMotor = true;
+
+	return (b2PrismaticJoint*)App->physics->world->CreateJoint(&prismaticJointDef);
+}
+
 update_status ModulePhysics::PostUpdate()
 {
 	if(App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -463,21 +480,4 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
-}
-
-b2PrismaticJoint* ModulePhysics::CreateBarraInici() {
-	PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody, 0, App->player->BarraInici_Texture, SDL_Rect{ 0,0,20, 98 });
-	PhysBody* baseBarra = App->physics->CreateRectangle(530, 780, 10, 10, b2_staticBody);
-
-	b2PrismaticJointDef prismaticJointDef;
-	prismaticJointDef.Initialize(actionBarra->body, baseBarra->body, baseBarra->body->GetWorldCenter(), b2Vec2(0, 1));
-	prismaticJointDef.collideConnected = true;
-	prismaticJointDef.lowerTranslation = 0;
-	prismaticJointDef.upperTranslation = 1.5f;
-	prismaticJointDef.enableLimit = true;
-	prismaticJointDef.maxMotorForce = 39;
-	prismaticJointDef.motorSpeed = 38.0;
-	prismaticJointDef.enableMotor = true;
-
-	return (b2PrismaticJoint*)App->physics->world->CreateJoint(&prismaticJointDef);
 }
