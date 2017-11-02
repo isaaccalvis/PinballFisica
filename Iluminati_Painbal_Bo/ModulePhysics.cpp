@@ -3,6 +3,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModulePhysics.h"
+#include "ModulePlayer.h"
 #include "p2Point.h"
 #include "ModuleSceneIntro.h"
 #include "math.h"
@@ -79,8 +80,7 @@ PhysBody*  ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type
 	pbody->width = pbody->height = radius;
 
 	if (textura != nullptr) {
-		pbody->SetTexture(textura);
-		//pbody->texturaActual = textura;
+		pbody->texturaActual = textura;
 		if (rectTextura.x != 0 || rectTextura.y != 0 || rectTextura.w != 0 || rectTextura.h != 0) {
 			pbody->texturaRect.x = rectTextura.x;
 			pbody->texturaRect.y = rectTextura.y;
@@ -117,7 +117,7 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 		fixture.restitution = 1;
 
 	b->CreateFixture(&fixture);
-
+	 
 	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
 	pbody->body->SetTransform(pos, angle);
@@ -126,8 +126,7 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 	pbody->height = height * 0.5f;
 
 	if (textura != nullptr) {
-		pbody->SetTexture(textura);
-		//pbody->texturaActual = textura;
+		pbody->texturaActual = textura;
 		if (rectTextura.x != 0 || rectTextura.y != 0 || rectTextura.w != 0 || rectTextura.h != 0) {
 			pbody->texturaRect.x = rectTextura.x;
 			pbody->texturaRect.y = rectTextura.y;
@@ -464,4 +463,21 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
+}
+
+b2PrismaticJoint* ModulePhysics::CreateBarraInici() {
+	PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody, 0, App->player->BarraInici_Texture, SDL_Rect{ 0,0,20, 98 });
+	PhysBody* baseBarra = App->physics->CreateRectangle(530, 780, 10, 10, b2_staticBody);
+
+	b2PrismaticJointDef prismaticJointDef;
+	prismaticJointDef.Initialize(actionBarra->body, baseBarra->body, baseBarra->body->GetWorldCenter(), b2Vec2(0, 1));
+	prismaticJointDef.collideConnected = true;
+	prismaticJointDef.lowerTranslation = 0;
+	prismaticJointDef.upperTranslation = 1.5f;
+	prismaticJointDef.enableLimit = true;
+	prismaticJointDef.maxMotorForce = 39;
+	prismaticJointDef.motorSpeed = 38.0;
+	prismaticJointDef.enableMotor = true;
+
+	return (b2PrismaticJoint*)App->physics->world->CreateJoint(&prismaticJointDef);
 }

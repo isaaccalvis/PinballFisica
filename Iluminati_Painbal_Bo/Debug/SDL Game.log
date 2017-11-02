@@ -1,35 +1,6 @@
-<<<<<<< HEAD
-﻿  ModulePhysics.cpp
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(34): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(59): warning C4244: 'argument': conversion from 'int' to 'float32', possible loss of data
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(132): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(133): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(194): warning C4018: '<': signed/unsigned mismatch
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(244): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(245): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(389): warning C4244: 'argument': conversion from 'float32' to 'int', possible loss of data
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(389): warning C4244: 'argument': conversion from 'const float32' to 'int', possible loss of data
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(449): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(450): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\aleixgm\desktop\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(456): warning C4244: 'return': conversion from 'float32' to 'int', possible loss of data
-c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\include\cmath(113): warning C4577: 'noexcept' used with no exception handling mode specified; termination on exception is not guaranteed. Specify /EHsc
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  ModuleSceneIntro.cpp
-  ModulePlayer.cpp
-  Application.cpp
-  SDL Game.vcxproj -> C:\Users\aleixgm\Desktop\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.exe
-  SDL Game.vcxproj -> C:\Users\aleixgm\Desktop\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.pdb (Partial PDB)
-=======
-﻿  ModuleSceneIntro.cpp
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(396): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(398): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(400): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(403): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(349): warning C4477: 'printf_s' : la cadena de formato '%i' requiere un argumento de tipo 'int', pero el argumento variádico 1 tiene el tipo 'SDL_Rect'
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(424): warning C4101: 'y': variable local sin referencia
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(424): warning C4101: 'x': variable local sin referencia
-c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\include\limits(211): warning C4577: si se usa 'noexcept' sin ningún modo de control de excepciones especificado, la finalización de la excepción no está garantizada. Especifique /EHsc
-  SDL Game.vcxproj -> C:\Users\Omega\Documents\GitHub\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.exe
-  SDL Game.vcxproj -> C:\Users\Omega\Documents\GitHub\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.pdb (Partial PDB)
->>>>>>> origin/master
+﻿  ModulePlayer.cpp
+c:\users\isaaccg1\documents\github\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(188): warning C4101: 'y': unreferenced local variable
+c:\users\isaaccg1\documents\github\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(188): warning C4101: 'x': unreferenced local variable
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\include\limits(211): warning C4577: 'noexcept' used with no exception handling mode specified; termination on exception is not guaranteed. Specify /EHsc
+  SDL Game.vcxproj -> C:\Users\isaaccg1\Documents\GitHub\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.exe
+  SDL Game.vcxproj -> C:\Users\isaaccg1\Documents\GitHub\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.pdb (Partial PDB)

@@ -4,6 +4,14 @@
 #include "p2Point.h"
 #include "Box2D\Box2D\Box2D.h"
 
+enum BrirgeWall
+{
+	Wall,
+	Destroy,
+	Idle,
+	Rebuild,
+};
+
 class ModulePlayer : public Module
 {
 public:
@@ -14,54 +22,49 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 	void NewBall(int x, int y);
 	void Stickers();
 
 public:
+
 	PhysBody* Quad_Started;
 	PhysBody* Quad_Bridge;
-
 	PhysBody* Fliper_R;
 	PhysBody* Fliper_L;
+	PhysBody *Circle_Body;
+
 	b2Body* body_FliperR;
 	b2Body* body_FliperL;
+
 	b2RevoluteJoint* left_joint;
 	b2RevoluteJoint* right_joint;
+	b2PrismaticJoint* barraInici;
 
-	PhysBody *Circle_Body;
+	SDL_Texture* BarraInici_Texture;
+	SDL_Texture* pilota_Texture;
+
+	SDL_Rect pilotaRect = { 0,0,19,19 };
+
 	int live = 3;
+	int Score = 0;
 	bool die = false;
 	bool started = false;
 	bool barrier = true;
 	
-	
 	bool Sens_L = false;
 	bool Sens_R = false;
-	uint currentTime, lastTime, buildTime;
-
 	int Bridge;
-
 	int Ball_A, Start_A, Bridge_A, Tub_A, Triangle_A, QuadPiramide_A, Sticker_A, Died_A;
-	enum BrirgeWall
-	{
-		Wall,
-		Destroy,
-		Idle,	
-		Rebuild,
-	};
 
-	int Score;
-
-	//Barra inic
-	b2PrismaticJoint* barraInici;
-	SDL_Texture* BarraInici_Texture;
-	SDL_Texture* pilota_Texture;
+	uint currentTime, lastTime, buildTime;
 
 	float left_rotation = 0;
 	float right_rotation = 0;
+	
 private:
-	// Aquests vectors son per la barra
+
 	float yBarraInicial = 0;
 
 };

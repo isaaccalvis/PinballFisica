@@ -6,13 +6,14 @@
 #include "ModuleTextures.h"
 #include "p2Point.h"
 #include "math.h"
+#include "ModuleWindow.h"
 #include "ModulePlayer.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleAudio.h"
 
-ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled){}
+ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled) {}
 
-ModulePlayer::~ModulePlayer(){}
+ModulePlayer::~ModulePlayer() {}
 
 bool ModulePlayer::Start()
 {
@@ -30,28 +31,15 @@ bool ModulePlayer::Start()
 	Died_A = App->audio->LoadFx("pinball/Die.wav");
 
 	Bridge = Wall;
-
+	barraInici = App->physics->CreateBarraInici();
 	Stickers();
 	NewBall(530,600);
 
-	// CREAR BARRA
-	{
-		PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody, 0, BarraInici_Texture, SDL_Rect{ 0,0,20, 98 });
-		PhysBody* baseBarra = App->physics->CreateRectangle(530, 780, 10, 10, b2_staticBody);
 
-		b2PrismaticJointDef prismaticJointDef;
-		prismaticJointDef.Initialize(actionBarra->body, baseBarra->body, baseBarra->body->GetWorldCenter(), b2Vec2(0, 1));
-		prismaticJointDef.collideConnected = true;
-		prismaticJointDef.lowerTranslation = 0;
-		prismaticJointDef.upperTranslation = 1.5f;
-		prismaticJointDef.enableLimit = true;
-		prismaticJointDef.maxMotorForce = 28;
-		prismaticJointDef.motorSpeed = 38.0;
-		prismaticJointDef.enableMotor = true;
 
-		barraInici = (b2PrismaticJoint*)App->physics->world->CreateJoint(&prismaticJointDef);
-	}
-	// ~CREAR BARRA
+	Quad_Started = App->physics->CreateRectangle(527, 415, 34, 5, b2_staticBody, -0.5f);
+	Quad_Started->body->SetActive(false);
+
 	return true;
 }
 
@@ -93,12 +81,12 @@ update_status ModulePlayer::Update()
 			yBarraInicial = 0.0f;
 			App->audio->PlayFx(Start_A);
 		}
-	// ~MOVIMENT BARRA INICIAL
 	
 	if (started && barrier) {
 		started = false;
 		barrier = false;
-		Quad_Started = App->physics->CreateRectangle(527, 415, 34, 5, b2_staticBody, -0.5f);
+		Quad_Started->body->SetActive(true);
+		//Quad_Started = App->physics->CreateRectangle(527, 415, 34, 5, b2_staticBody, -0.5f);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
 		Circle_Body->body->ApplyLinearImpulse({0, -3.5f}, {0,0}, true);
@@ -108,7 +96,8 @@ update_status ModulePlayer::Update()
 		barrier = true;
 		App->audio->PlayFx(Died_A);
 		App->physics->world->DestroyBody(Circle_Body->body);
-		App->physics->world->DestroyBody(Quad_Started->body);
+		//App->physics->world->DestroyBody(Quad_Started->body);
+		Quad_Started->body->SetActive(false);
 		if (live > 0)
 			NewBall(530,600);
 		live--;
@@ -171,6 +160,18 @@ update_status ModulePlayer::Update()
 	if (Bridge == Rebuild && currentTime > 2000)
 		Bridge = Wall;
 	
+	switch (live) {
+	case 3:
+		App->renderer->Blit(pilota_Texture, 630, 150, &pilotaRect);
+	case 2:
+		App->renderer->Blit(pilota_Texture, 610, 150, &pilotaRect);
+	case 1:
+		App->renderer->Blit(pilota_Texture, 590, 150, &pilotaRect);
+		break;
+	}
+	char title[40];
+	int n = sprintf_s(title, "2D Physics,     SCORE: %i", Score);
+	App->window->SetTitle(title);
 	return UPDATE_CONTINUE;
 }
 

@@ -31,24 +31,22 @@ bool ModuleSceneIntro::Start()
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
-	circles_Texture_Type1Col = App->textures->Load("pinball/Barra.png");
-	circle_Reboting_Ilumination = App->textures->Load("pinball/Barra.png");
-	circle_Reboting_Ilumination_GOLD = App->textures->Load("pinball/Barra.png");
+	circle_Reboting_Ilumination = App->textures->Load("pinball/aroPivotsPunts.png");
 	// CREAR LES TEXTURES DEL REBOTES CIRCULARS SENSE COLISIO
 	for (int i = 0; i < 5; i++) {
 		texturesSenseCollisio[i].textura = circle_Reboting_Ilumination;
-		texturesSenseCollisio[i].texturaRect = { 0,0,50,50 };
+		texturesSenseCollisio[i].texturaRect = { 0,0,60,60 };
 	}
-	texturesSenseCollisio[0].x = 243;
-	texturesSenseCollisio[0].y = 49;
-	texturesSenseCollisio[1].x = 386;
-	texturesSenseCollisio[1].y = 152;
-	texturesSenseCollisio[2].x = 279;
-	texturesSenseCollisio[2].y = 141;
-	texturesSenseCollisio[3].x = 331;
-	texturesSenseCollisio[3].y = 187;
-	texturesSenseCollisio[4].x = 337;
-	texturesSenseCollisio[4].y = 90;
+	texturesSenseCollisio[0].x = 242;
+	texturesSenseCollisio[0].y = 39;
+	texturesSenseCollisio[1].x = 378;
+	texturesSenseCollisio[1].y = 141;
+	texturesSenseCollisio[2].x = 271;
+	texturesSenseCollisio[2].y = 130;
+	texturesSenseCollisio[3].x = 323;
+	texturesSenseCollisio[3].y = 176;
+	texturesSenseCollisio[4].x = 329;
+	texturesSenseCollisio[4].y = 79;
 
 	fons = App->textures->Load("pinball/BG.png");
 	kicker_L = App->textures->Load("pinball/kicker_L.png");
@@ -282,7 +280,6 @@ bool ModuleSceneIntro::Start()
 	return ret;
 }
 
-// Load assets
 bool ModuleSceneIntro::CleanUp()
 {
 	App->textures->Unload(fons);
@@ -294,27 +291,12 @@ bool ModuleSceneIntro::CleanUp()
 	return true;
 }
 
-// Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	/*if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		App->renderer->camera.y -= 4;
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		App->renderer->camera.y += 4;
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		App->renderer->camera.x += 4;
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		App->renderer->camera.x -= 4;*/
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		App->player->NewBall(App->input->GetMouseX(), App->input->GetMouseY());
-	/*if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		ray_on = !ray_on;
-		ray.x = App->input->GetMouseX();
-		ray.y = App->input->GetMouseY();
-	}
-	*/
-	// PRINTAR EL MAPA
+
 	App->renderer->Blit(fons, 0, 0, &r);
 	App->renderer->Blit(kicker_L, 82, 700, NULL, 1.0f, App->player->left_rotation);
 	App->renderer->Blit(kicker_R, 276, 700, NULL, 1.0f, App->player->right_rotation);
@@ -327,58 +309,18 @@ update_status ModuleSceneIntro::Update()
 
 	fVector normal(0.0f, 0.0f);
 
-	// All draw functions ------------------------------------------------------
 	p2List_item<PhysBody*>* recList = physList.getFirst();
 
 	while (recList != NULL)
 	{
-		if (recList->data->GetTexture() != nullptr) {
+		if (recList->data->texturaActual != nullptr) {
 			int x, y;
 			recList->data->GetPosition(x, y);
-			printf_s("%i \n", recList->data->texturaRect);
 			SDL_Rect re{ 0, 0, 400, 400 };
-			App->renderer->Blit(recList->data->GetTexture(), x + 1, y, &recList->data->texturaRect, 1.0f, recList->data->GetRotation());
+			App->renderer->Blit(recList->data->texturaActual, x + 1, y, &recList->data->texturaRect, 1.0f, recList->data->GetRotation());
 		}
 		recList = recList->next;
 	}
-
-	//p2List_item<PhysBody*>* c = circles.getFirst();
-	//while(c != NULL)
-	//{
-	//	if (c->data->texturaActual != nullptr) {
-	//		App->renderer->Blit(c->data->texturaActual, c->data->body->GetPosition().x, c->data->body->GetPosition().y, &c->data->texturaRect);
-	//	}
-	//	int x, y;
-	//	c->data->GetPosition(x, y);
-	//	if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
-	//		App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
-	//	c = c->next;
-	//}
-
-	//c = boxes.getFirst();
-	//while(c != NULL)
-	//{
-	//	int x, y;
-	//	c->data->GetPosition(x, y);
-	//	App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
-	//	if(ray_on)
-	//	{
-	//		int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
-	//		if(hit >= 0)
-	//			ray_hit = hit;
-	//	}
-	//	c = c->next;
-	//}
-
-	//c = ricks.getFirst();
-	//while(c != NULL)
-	//{
-	//	int x, y;
-	//	c->data->GetPosition(x, y);
-	//	App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
-	//	c = c->next;
-	//}
-
 	// ray -----------------
 	if(ray_on == true)
 	{
@@ -402,28 +344,7 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-
-	//if (true)
-	{
-
-	}
-
-
-
 	int x, y;
 
 	App->audio->PlayFx(bonus_fx);
-
-	/*
-	if(bodyA)
-	{
-		bodyA->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}
-
-	if(bodyB)
-	{
-		bodyB->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}*/
 }

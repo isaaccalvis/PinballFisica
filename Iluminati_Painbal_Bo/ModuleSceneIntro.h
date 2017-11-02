@@ -69,9 +69,7 @@ public:
 	SDL_Rect r;
 	SDL_Texture* box;
 	SDL_Texture* rick;
-	SDL_Texture* circles_Texture_Type1Col;
 	SDL_Texture* circle_Reboting_Ilumination;
-	SDL_Texture* circle_Reboting_Ilumination_GOLD;
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
