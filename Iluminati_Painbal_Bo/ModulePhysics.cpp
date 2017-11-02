@@ -86,7 +86,8 @@ PhysBody*  ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type
 	pbody->width = pbody->height = radius;
 
 	if (textura != nullptr) {
-		pbody->texturaActual = textura;
+		pbody->SetTexture(textura);
+		//pbody->texturaActual = textura;
 		if (rectTextura.x != 0 || rectTextura.y != 0 || rectTextura.w != 0 || rectTextura.h != 0) {
 			pbody->texturaRect.x = rectTextura.x;
 			pbody->texturaRect.y = rectTextura.y;
@@ -132,7 +133,8 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 	pbody->height = height * 0.5f;
 
 	if (textura != nullptr) {
-		pbody->texturaActual = textura;
+		pbody->SetTexture(textura);
+		//pbody->texturaActual = textura;
 		if (rectTextura.x != 0 || rectTextura.y != 0 || rectTextura.w != 0 || rectTextura.h != 0) {
 			pbody->texturaRect.x = rectTextura.x;
 			pbody->texturaRect.y = rectTextura.y;

@@ -315,12 +315,12 @@ update_status ModuleSceneIntro::Update()
 
 	while (recList != NULL)
 	{
-		if (recList->data->texturaActual != nullptr) {
+		if (recList->data->GetTexture() != nullptr) {
 			int x, y;
 			recList->data->GetPosition(x, y);
 			printf_s("%i \n", recList->data->texturaRect);
 			SDL_Rect re{ 0, 0, 400, 400 };
-			App->renderer->Blit(recList->data->texturaActual, x + 1, y, &recList->data->texturaRect);
+			App->renderer->Blit(recList->data->GetTexture(), x + 1, y, &recList->data->texturaRect, 1.0f, recList->data->GetRotation());
 		}
 		recList = recList->next;
 	}
