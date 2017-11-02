@@ -1,30 +1,6 @@
 ﻿  ModulePlayer.cpp
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(184): warning C4101: 'y': variable local sin referencia
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(184): warning C4101: 'x': variable local sin referencia
+c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(190): warning C4101: 'y': variable local sin referencia
+c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(190): warning C4101: 'x': variable local sin referencia
 c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\include\limits(211): warning C4577: si se usa 'noexcept' sin ningún modo de control de excepciones especificado, la finalización de la excepción no está garantizada. Especifique /EHsc
-  ModulePhysics.cpp
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(35): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(125): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(126): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(186): warning C4018: '<': no coinciden signed/unsigned
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(236): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(237): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(398): warning C4244: 'argumento': conversión de 'float32' a 'int'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(398): warning C4244: 'argumento': conversión de 'const float32' a 'int'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(458): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(459): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulephysics.cpp(465): warning C4244: 'return': conversión de 'float32' a 'int'; posible pérdida de datos
-c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\include\cmath(113): warning C4577: si se usa 'noexcept' sin ningún modo de control de excepciones especificado, la finalización de la excepción no está garantizada. Especifique /EHsc
-  Generando código...
-  Omitiendo... (no se detectaron cambios relevantes)
-  log.cpp
-  ModuleWindow.cpp
-  ModuleTextures.cpp
-  ModuleSceneIntro.cpp
-  ModuleRender.cpp
-  ModuleInput.cpp
-  ModuleAudio.cpp
-  Main.cpp
-  Application.cpp
   SDL Game.vcxproj -> C:\Users\Omega\Documents\GitHub\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.exe
   SDL Game.vcxproj -> C:\Users\Omega\Documents\GitHub\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.pdb (Partial PDB)

@@ -10,7 +10,7 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	circle = box = rick = NULL;
+	circle = NULL;
 	ray_on = false;
 	sensed = false;
 	r.x = 0;
@@ -33,26 +33,24 @@ bool ModuleSceneIntro::Start()
 	tube_rect.w = 81;
 
 	circle = App->textures->Load("pinball/wheel.png"); 
-	box = App->textures->Load("pinball/crate.png");
-	rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	circle_Reboting_Ilumination = App->textures->Load("pinball/aroPivotsPunts.png");
 
 	// CREAR LES TEXTURES DEL REBOTES CIRCULARS SENSE COLISIO
 	for (int i = 0; i < 5; i++) {
-		texturesSenseCollisio[i].textura = circle_Reboting_Ilumination;
-		texturesSenseCollisio[i].texturaRect = { 0,0,60,60 };
+		circleTextures_WithouColl[i].textura = circle_Reboting_Ilumination;
+		circleTextures_WithouColl[i].texturaRect = { 0,0,60,60 };
 	}
-	texturesSenseCollisio[0].x = 242;
-	texturesSenseCollisio[0].y = 39;
-	texturesSenseCollisio[1].x = 378;
-	texturesSenseCollisio[1].y = 141;
-	texturesSenseCollisio[2].x = 271;
-	texturesSenseCollisio[2].y = 130;
-	texturesSenseCollisio[3].x = 323;
-	texturesSenseCollisio[3].y = 176;
-	texturesSenseCollisio[4].x = 329;
-	texturesSenseCollisio[4].y = 79;
+	circleTextures_WithouColl[0].x = 242;
+	circleTextures_WithouColl[0].y = 39;
+	circleTextures_WithouColl[1].x = 378;
+	circleTextures_WithouColl[1].y = 141;
+	circleTextures_WithouColl[2].x = 271;
+	circleTextures_WithouColl[2].y = 130;
+	circleTextures_WithouColl[3].x = 323;
+	circleTextures_WithouColl[3].y = 176;
+	circleTextures_WithouColl[4].x = 329;
+	circleTextures_WithouColl[4].y = 79;
 
 	fons = App->textures->Load("pinball/BG.png");
 	tube = App->textures->Load("pinball/pon.png");
@@ -294,9 +292,8 @@ bool ModuleSceneIntro::CleanUp()
 	App->textures->Unload(kicker_L);
 	App->textures->Unload(kicker_R);
 	App->textures->Unload(circle);
-	App->textures->Unload(box);
-	App->textures->Unload(rick);
 	App->textures->Unload(tube);
+	App->textures->Unload(circle_Reboting_Ilumination);
 	return true;
 }
 
@@ -322,11 +319,11 @@ update_status ModuleSceneIntro::Update()
 
 	while (recList != NULL)
 	{
-		if (recList->data->texturaActual != nullptr) {
+		if (recList->data->textureActual != nullptr) {
 			int x, y;
 			recList->data->GetPosition(x, y);
 			SDL_Rect re{ 0, 0, 400, 400 };
-			App->renderer->Blit(recList->data->texturaActual, x + 1, y, &recList->data->texturaRect, 1.0f);
+			App->renderer->Blit(recList->data->textureActual, x + 1, y, &recList->data->textureRect, 1.0f);
 		}
 		recList = recList->next;
 	}
@@ -347,8 +344,8 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	for (int i = 0; i < 5; i++) {
-		if (texturesSenseCollisio[i].temporitzador > SDL_GetTicks())
-			App->renderer->Blit(texturesSenseCollisio[i].textura, texturesSenseCollisio[i].x, texturesSenseCollisio[i].y, &texturesSenseCollisio[i].texturaRect);
+		if (circleTextures_WithouColl[i].temporitzador > SDL_GetTicks())
+			App->renderer->Blit(circleTextures_WithouColl[i].textura, circleTextures_WithouColl[i].x, circleTextures_WithouColl[i].y, &circleTextures_WithouColl[i].texturaRect);
 	}
 
 	return UPDATE_CONTINUE;

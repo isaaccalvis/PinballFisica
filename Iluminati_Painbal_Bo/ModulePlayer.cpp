@@ -17,8 +17,8 @@ ModulePlayer::~ModulePlayer() {}
 
 bool ModulePlayer::Start()
 {
-	pilota_Texture = App->textures->Load("pinball/ball.png");
-	BarraInici_Texture = App->textures->Load("pinball/Barra.png");
+	ball_Texture = App->textures->Load("pinball/ball.png");
+	InitialBar_Texture = App->textures->Load("pinball/Barra.png");
 
 	Bridge_A = App->audio->LoadFx("pinball/Bridge.wav");
 	Bonus_A = App->audio->LoadFx("pinball/Bonus_Ball.wav");
@@ -68,7 +68,7 @@ update_status ModulePlayer::Update()
 		App->audio->PlayFx(Sticker_A);
 
 	b2Vec2 moviment(0, yBarraInicial);
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 		yBarraInicial += 0.00001f;
 		barraInici->GetBodyA()->ApplyLinearImpulse(moviment, { 0,0 }, 0);
 		barraInici->EnableMotor(false);
@@ -79,7 +79,12 @@ update_status ModulePlayer::Update()
 			yBarraInicial = 0.0f;
 			App->audio->PlayFx(Sticker_A);
 		}
-	
+
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN && live == -1) {
+		live = 3;
+		NewBall(530, 600);
+		Score = 0;
+	}
 	if (started && barrier) {
 		started = false;
 		barrier = false;
@@ -158,11 +163,11 @@ update_status ModulePlayer::Update()
 	
 	switch (live) {
 	case 3:
-		App->renderer->Blit(pilota_Texture, 630, 150, &pilotaRect);
+		App->renderer->Blit(ball_Texture, 630, 150, &ball_Rect);
 	case 2:
-		App->renderer->Blit(pilota_Texture, 610, 150, &pilotaRect);
+		App->renderer->Blit(ball_Texture, 610, 150, &ball_Rect);
 	case 1:
-		App->renderer->Blit(pilota_Texture, 590, 150, &pilotaRect);
+		App->renderer->Blit(ball_Texture, 590, 150, &ball_Rect);
 		break;
 	}
 	char title[40];
@@ -173,7 +178,8 @@ update_status ModulePlayer::Update()
 
 bool ModulePlayer::CleanUp()
 {
-
+	App->textures->Unload(ball_Texture);
+	App->textures->Unload(InitialBar_Texture);
 	return true;
 }
 
@@ -224,28 +230,28 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	else if (bodyB == App->scene_intro->BallU) {
 		Score += 5;
-		App->scene_intro->texturesSenseCollisio[0].temporitzador = 500 + SDL_GetTicks();
+		App->scene_intro->circleTextures_WithouColl[0].temporitzador = 500 + SDL_GetTicks();
 		App->audio->PlayFx(Ball_A);
 	}
 	else if (bodyB == App->scene_intro->BallD) {
 		Score += 5;
-		App->scene_intro->texturesSenseCollisio[1].temporitzador = 500 + SDL_GetTicks();
+		App->scene_intro->circleTextures_WithouColl[1].temporitzador = 500 + SDL_GetTicks();
 		App->audio->PlayFx(Ball_A);
 	}
 	else if (bodyB == App->scene_intro->BallE) {
 		Score += 5;
-		App->scene_intro->texturesSenseCollisio[2].temporitzador = 500 + SDL_GetTicks();
+		App->scene_intro->circleTextures_WithouColl[2].temporitzador = 500 + SDL_GetTicks();
 		App->audio->PlayFx(Ball_A);
 	}
 	else if (bodyB == App->scene_intro->BallB) {
 		Score += 5;
-		App->scene_intro->texturesSenseCollisio[3].temporitzador = 500 + SDL_GetTicks();
+		App->scene_intro->circleTextures_WithouColl[3].temporitzador = 500 + SDL_GetTicks();
 		App->audio->PlayFx(Ball_A);
 	}
 
 	else if (bodyB == App->scene_intro->BallG) {
 		Score += 10;
-		App->scene_intro->texturesSenseCollisio[4].temporitzador = 500 + SDL_GetTicks();
+		App->scene_intro->circleTextures_WithouColl[4].temporitzador = 500 + SDL_GetTicks();
 		App->audio->PlayFx(Ball_A);
 	}
 	else if (bodyB == App->scene_intro->Start_sens && barrier)
@@ -254,14 +260,16 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	else if(bodyB == App->scene_intro->placaD || bodyB == App->scene_intro->placaE)
 		App->audio->PlayFx(Triangle_A);
 
-	else if(bodyB == App->scene_intro->Tube_sens)
-		Circle_Body->body->ApplyLinearImpulse({ 1, 0 }, { 0,0 }, true);
+	else if (bodyB == App->scene_intro->Tube_sens) {
+		if (Circle_Body->body->GetLinearVelocity().x < 1)
+			Circle_Body->body->ApplyLinearImpulse({ 1, 0 }, { 0,0 }, true);
+	}
 
 
 }
 
 void ModulePlayer::NewBall(int x, int y) {
-	Circle_Body = App->physics->CreateCircle(x, y, 8, b2_dynamicBody, 0.1f, pilota_Texture, SDL_Rect{ 0,0,16,16 });
+	Circle_Body = App->physics->CreateCircle(x, y, 8, b2_dynamicBody, 0.1f, ball_Texture, SDL_Rect{ 0,0,16,16 });
 	Circle_Body->listener = this;
 }
 

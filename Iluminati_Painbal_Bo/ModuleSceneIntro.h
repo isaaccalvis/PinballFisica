@@ -70,13 +70,11 @@ public:
 	SDL_Texture* kicker_L;
 	SDL_Rect r;
 	SDL_Rect tube_rect;
-	SDL_Texture* box;
-	SDL_Texture* rick;
 	SDL_Texture* circle_Reboting_Ilumination;
 	SDL_Texture* tube;
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
 
-	TextureNoCollition texturesSenseCollisio[5];
+	TextureNoCollition circleTextures_WithouColl[5];
 };

@@ -80,18 +80,18 @@ PhysBody*  ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type
 	pbody->width = pbody->height = radius;
 
 	if (textura != nullptr) {
-		pbody->texturaActual = textura;
+		pbody->textureActual = textura;
 		if (rectTextura.x != 0 || rectTextura.y != 0 || rectTextura.w != 0 || rectTextura.h != 0) {
-			pbody->texturaRect.x = rectTextura.x;
-			pbody->texturaRect.y = rectTextura.y;
-			pbody->texturaRect.w = rectTextura.w;
-			pbody->texturaRect.h = rectTextura.h;
+			pbody->textureRect.x = rectTextura.x;
+			pbody->textureRect.y = rectTextura.y;
+			pbody->textureRect.w = rectTextura.w;
+			pbody->textureRect.h = rectTextura.h;
 		}
 		else {
-			pbody->texturaRect.x = x;
-			pbody->texturaRect.y = y;
-			pbody->texturaRect.w = radius;
-			pbody->texturaRect.h = radius;
+			pbody->textureRect.x = x;
+			pbody->textureRect.y = y;
+			pbody->textureRect.w = radius;
+			pbody->textureRect.h = radius;
 		}
 	}
 	App->scene_intro->physList.add(pbody);
@@ -126,18 +126,18 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, b2
 	pbody->height = height * 0.5f;
 
 	if (textura != nullptr) {
-		pbody->texturaActual = textura;
+		pbody->textureActual = textura;
 		if (rectTextura.x != 0 || rectTextura.y != 0 || rectTextura.w != 0 || rectTextura.h != 0) {
-			pbody->texturaRect.x = rectTextura.x;
-			pbody->texturaRect.y = rectTextura.y;
-			pbody->texturaRect.w = rectTextura.w;
-			pbody->texturaRect.h = rectTextura.h;
+			pbody->textureRect.x = rectTextura.x;
+			pbody->textureRect.y = rectTextura.y;
+			pbody->textureRect.w = rectTextura.w;
+			pbody->textureRect.h = rectTextura.h;
 		}
 		else {
-			pbody->texturaRect.x = x;
-			pbody->texturaRect.y = y;
-			pbody->texturaRect.w = width;
-			pbody->texturaRect.h = height;
+			pbody->textureRect.x = x;
+			pbody->textureRect.y = y;
+			pbody->textureRect.w = width;
+			pbody->textureRect.h = height;
 		}
 	}
 
@@ -273,7 +273,7 @@ PhysBody * ModulePhysics::CreateRightSticker()
 }
 
 b2PrismaticJoint* ModulePhysics::CreateBarraInici() {
-	PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody, 0, App->player->BarraInici_Texture, SDL_Rect{ 0,0,20, 98 });
+	PhysBody* actionBarra = App->physics->CreateRectangle(529, 750, 25, 10, b2_dynamicBody, 0, App->player->InitialBar_Texture, SDL_Rect{ 0,0,20, 158 });
 	PhysBody* baseBarra = App->physics->CreateRectangle(530, 780, 10, 10, b2_staticBody);
 
 	b2PrismaticJointDef prismaticJointDef;

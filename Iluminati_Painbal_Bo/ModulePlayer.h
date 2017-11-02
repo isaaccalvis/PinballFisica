@@ -42,10 +42,10 @@ public:
 	b2RevoluteJoint* right_joint;
 	b2PrismaticJoint* barraInici;
 
-	SDL_Texture* BarraInici_Texture;
-	SDL_Texture* pilota_Texture;
+	SDL_Texture* InitialBar_Texture;
+	SDL_Texture* ball_Texture;
 
-	SDL_Rect pilotaRect = { 0,0,19,19 };
+	SDL_Rect ball_Rect = { 0,0,19,19 };
 
 	int live = 3;
 	int Score = 0;
