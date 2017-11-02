@@ -202,11 +202,27 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			Sens_R = true;
 	}
 
-	else if (bodyB == App->scene_intro->BallU || bodyB == App->scene_intro->BallD || bodyB == App->scene_intro->BallE || bodyB == App->scene_intro->BallB)
+	else if (bodyB == App->scene_intro->BallU) {
 		Score += 5;
-	else if (bodyB == App->scene_intro->BallG)
-		Score += 10;
+		App->scene_intro->texturesSenseCollisio[0].temporitzador = 500 + SDL_GetTicks();
+	}
+	else if (bodyB == App->scene_intro->BallD) {
+		Score += 5;
+		App->scene_intro->texturesSenseCollisio[1].temporitzador = 500 + SDL_GetTicks();
+	}
+	else if (bodyB == App->scene_intro->BallE) {
+		Score += 5;
+		App->scene_intro->texturesSenseCollisio[2].temporitzador = 500 + SDL_GetTicks();
+	}
+	else if (bodyB == App->scene_intro->BallB) {
+		Score += 5;
+		App->scene_intro->texturesSenseCollisio[3].temporitzador = 500 + SDL_GetTicks();
+	}
 
+	else if (bodyB == App->scene_intro->BallG) {
+		Score += 10;
+		App->scene_intro->texturesSenseCollisio[4].temporitzador = 500 + SDL_GetTicks();
+	}
 	else if (bodyB == App->scene_intro->Start_sens && barrier)
 		started = true;
 }

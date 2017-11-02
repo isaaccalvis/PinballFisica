@@ -1,6 +1,11 @@
-﻿  ModulePlayer.cpp
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(171): warning C4101: 'y': variable local sin referencia
-c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(171): warning C4101: 'x': variable local sin referencia
+﻿  ModuleSceneIntro.cpp
+c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(396): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(398): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(400): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(403): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(349): warning C4477: 'printf_s' : la cadena de formato '%i' requiere un argumento de tipo 'int', pero el argumento variádico 1 tiene el tipo 'SDL_Rect'
+c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(424): warning C4101: 'y': variable local sin referencia
+c:\users\omega\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(424): warning C4101: 'x': variable local sin referencia
 c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\include\limits(211): warning C4577: si se usa 'noexcept' sin ningún modo de control de excepciones especificado, la finalización de la excepción no está garantizada. Especifique /EHsc
   SDL Game.vcxproj -> C:\Users\Omega\Documents\GitHub\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.exe
   SDL Game.vcxproj -> C:\Users\Omega\Documents\GitHub\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.pdb (Partial PDB)

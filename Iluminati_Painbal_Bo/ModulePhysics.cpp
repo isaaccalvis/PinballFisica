@@ -55,13 +55,6 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-void PhysBody::canviarTextura(int newX, int newY, SDL_Texture* newTexture, SDL_Rect newRect) {
-	this->body->SetTransform(b2Vec2(newX, newY),0);
-	texturaRect = newRect;
-	texturaActual = newTexture;
-}
-
-
 PhysBody*  ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type, float res, SDL_Texture* textura, SDL_Rect rectTextura)
 {
 	b2BodyDef body;

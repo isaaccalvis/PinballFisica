@@ -6,6 +6,18 @@
 
 class PhysBody;
 
+class TextureNoCollition 
+{
+public:
+	TextureNoCollition() {}
+	~TextureNoCollition() {}
+
+	SDL_Texture* textura;
+	SDL_Rect texturaRect;
+	int x, y;
+	uint temporitzador = 0;
+};
+
 class ModuleSceneIntro : public Module
 {
 public:
@@ -58,7 +70,11 @@ public:
 	SDL_Texture* box;
 	SDL_Texture* rick;
 	SDL_Texture* circles_Texture_Type1Col;
+	SDL_Texture* circle_Reboting_Ilumination;
+	SDL_Texture* circle_Reboting_Ilumination_GOLD;
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
+
+	TextureNoCollition texturesSenseCollisio[5];
 };
