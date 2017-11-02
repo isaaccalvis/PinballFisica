@@ -32,6 +32,23 @@ bool ModuleSceneIntro::Start()
 	rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	circles_Texture_Type1Col = App->textures->Load("pinball/Barra.png");
+	circle_Reboting_Ilumination = App->textures->Load("pinball/Barra.png");
+	circle_Reboting_Ilumination_GOLD = App->textures->Load("pinball/Barra.png");
+	// CREAR LES TEXTURES DEL REBOTES CIRCULARS SENSE COLISIO
+	for (int i = 0; i < 5; i++) {
+		texturesSenseCollisio[i].textura = circle_Reboting_Ilumination;
+		texturesSenseCollisio[i].texturaRect = { 0,0,50,50 };
+	}
+	texturesSenseCollisio[0].x = 243;
+	texturesSenseCollisio[0].y = 49;
+	texturesSenseCollisio[1].x = 386;
+	texturesSenseCollisio[1].y = 152;
+	texturesSenseCollisio[2].x = 279;
+	texturesSenseCollisio[2].y = 141;
+	texturesSenseCollisio[3].x = 331;
+	texturesSenseCollisio[3].y = 187;
+	texturesSenseCollisio[4].x = 337;
+	texturesSenseCollisio[4].y = 90;
 
 	fons = App->textures->Load("pinball/BG.png");
 	kicker_L = App->textures->Load("pinball/kicker_L.png");
@@ -373,6 +390,11 @@ update_status ModuleSceneIntro::Update()
 
 		if(normal.x != 0.0f)
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
+	}
+
+	for (int i = 0; i < 5; i++) {
+		if (texturesSenseCollisio[i].temporitzador > SDL_GetTicks())
+			App->renderer->Blit(texturesSenseCollisio[i].textura, texturesSenseCollisio[i].x, texturesSenseCollisio[i].y, &texturesSenseCollisio[i].texturaRect);
 	}
 
 	return UPDATE_CONTINUE;
