@@ -21,13 +21,14 @@ bool ModulePlayer::Start()
 	BarraInici_Texture = App->textures->Load("pinball/Barra.png");
 
 	//Audio
-	Ball_A = App->audio->LoadFx("pinball/Bola.wav");
-	Start_A = App->audio->LoadFx("pinball/Start.wav");
+
 	Bridge_A = App->audio->LoadFx("pinball/Bridge.wav");
+	Bonus_A = App->audio->LoadFx("pinball/Bonus_Ball.wav");
 	Tub_A = App->audio->LoadFx("pinball/Tub.wav");
-	Triangle_A = App->audio->LoadFx("pinball/Triangle.wav");
 	QuadPiramide_A = App->audio->LoadFx("pinball/Quad_Piramide.wav");
-	Sticker_A = App->audio->LoadFx("pinball/Sticker.wav");
+	Triangle_A = App->audio->LoadFx("pinball/Triangle.wav");
+	Ball_A = App->audio->LoadFx("pinball/Ball.wav");
+	Sticker_A = App->audio->LoadFx("pinball/Start.wav");
 	Died_A = App->audio->LoadFx("pinball/Die.wav");
 
 	Bridge = Wall;
@@ -58,15 +59,17 @@ update_status ModulePlayer::Update()
 		left_joint->EnableMotor(true);
 		left_joint->SetMaxMotorTorque(700);
 		left_joint->SetMotorSpeed(-15);
-		App->audio->PlayFx(Sticker_A);
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+			App->audio->PlayFx(Sticker_A);
 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		right_joint->EnableMotor(true);
 		right_joint->SetMaxMotorTorque(700);
 		right_joint->SetMotorSpeed(15);
-		App->audio->PlayFx(Sticker_A);
 	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+		App->audio->PlayFx(Sticker_A);
 
 	// MOVIMENT BARRA INICIAL
 	b2Vec2 moviment(0, yBarraInicial);
@@ -79,7 +82,7 @@ update_status ModulePlayer::Update()
 		if (yBarraInicial != 0) {
 			barraInici->EnableMotor(true);
 			yBarraInicial = 0.0f;
-			App->audio->PlayFx(Start_A);
+			App->audio->PlayFx(Sticker_A);
 		}
 	
 	if (started && barrier) {
@@ -177,7 +180,8 @@ update_status ModulePlayer::Update()
 
 bool ModulePlayer::CleanUp()
 {
-	// Unload assets
+
+// Unload assets
 	return true;
 }
 
@@ -197,7 +201,7 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	else if (bodyB == App->scene_intro->Brindge_sens) {
 		if (Circle_Body->body->GetLinearVelocity().y > -1.5)
-			Circle_Body->body->ApplyLinearImpulse({ 0, -2 }, { 0,0 }, true);
+			Circle_Body->body->ApplyLinearImpulse({ 0, -2.5 }, { 0,0 }, true);
 		else if(Circle_Body->body->GetLinearVelocity().y > -4)
 			Circle_Body->body->ApplyLinearImpulse({ 0, -1.5 }, { 0,0 }, true);
 		else
@@ -208,8 +212,9 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	}
 	else if (bodyB == App->scene_intro->Tub_sens) {
 		if (Circle_Body->body->GetLinearVelocity().y > -2)
-			Circle_Body->body->ApplyLinearImpulse({ 0, -1.5 }, { 0,0 }, true);
-		Circle_Body->body->ApplyLinearImpulse({ 0, -1 }, { 0,0 }, true);
+			Circle_Body->body->ApplyLinearImpulse({ 0, -3 }, { 0,0 }, true);
+		else
+		Circle_Body->body->ApplyLinearImpulse({ 0, -1.5f }, { 0,0 }, true);
 		Score += 400;
 		App->audio->PlayFx(Tub_A);
 
@@ -218,7 +223,7 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		Circle_Body->body->SetGravityScale(0);
 		lastTime = SDL_GetTicks();
 		Score += 100;
-		App->audio->PlayFx(Ball_A);
+		App->audio->PlayFx(Bonus_A);
 		if (bodyB == App->scene_intro->L_Ball_sens)
 			Sens_L = true;
 		else if (bodyB == App->scene_intro->R_Ball_sens)
@@ -228,26 +233,39 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	else if (bodyB == App->scene_intro->BallU) {
 		Score += 5;
 		App->scene_intro->texturesSenseCollisio[0].temporitzador = 500 + SDL_GetTicks();
+		App->audio->PlayFx(Ball_A);
 	}
 	else if (bodyB == App->scene_intro->BallD) {
 		Score += 5;
 		App->scene_intro->texturesSenseCollisio[1].temporitzador = 500 + SDL_GetTicks();
+		App->audio->PlayFx(Ball_A);
 	}
 	else if (bodyB == App->scene_intro->BallE) {
 		Score += 5;
 		App->scene_intro->texturesSenseCollisio[2].temporitzador = 500 + SDL_GetTicks();
+		App->audio->PlayFx(Ball_A);
 	}
 	else if (bodyB == App->scene_intro->BallB) {
 		Score += 5;
 		App->scene_intro->texturesSenseCollisio[3].temporitzador = 500 + SDL_GetTicks();
+		App->audio->PlayFx(Ball_A);
 	}
 
 	else if (bodyB == App->scene_intro->BallG) {
 		Score += 10;
 		App->scene_intro->texturesSenseCollisio[4].temporitzador = 500 + SDL_GetTicks();
+		App->audio->PlayFx(Ball_A);
 	}
 	else if (bodyB == App->scene_intro->Start_sens && barrier)
 		started = true;
+
+	else if(bodyB == App->scene_intro->placaD || bodyB == App->scene_intro->placaE)
+		App->audio->PlayFx(Triangle_A);
+
+	else if(bodyB == App->scene_intro->Tube_sens)
+		Circle_Body->body->ApplyLinearImpulse({ 1, 0 }, { 0,0 }, true);
+
+
 }
 
 void ModulePlayer::NewBall(int x, int y) {

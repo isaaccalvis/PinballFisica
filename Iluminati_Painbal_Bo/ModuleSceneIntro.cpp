@@ -27,11 +27,17 @@ bool ModuleSceneIntro::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
+	tube_rect.x = 0;
+	tube_rect.y = 0;
+	tube_rect.h = 125;
+	tube_rect.w = 81;
+
 	circle = App->textures->Load("pinball/wheel.png"); 
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	circle_Reboting_Ilumination = App->textures->Load("pinball/aroPivotsPunts.png");
+
 	// CREAR LES TEXTURES DEL REBOTES CIRCULARS SENSE COLISIO
 	for (int i = 0; i < 5; i++) {
 		texturesSenseCollisio[i].textura = circle_Reboting_Ilumination;
@@ -49,6 +55,7 @@ bool ModuleSceneIntro::Start()
 	texturesSenseCollisio[4].y = 79;
 
 	fons = App->textures->Load("pinball/BG.png");
+	tube = App->textures->Load("pinball/pon.png");
 	kicker_L = App->textures->Load("pinball/kicker_L.png");
 	kicker_R = App->textures->Load("pinball/kicker_R.png");
 
@@ -272,6 +279,7 @@ bool ModuleSceneIntro::Start()
 	R_Ball_sens = App->physics->CreateRectangleSensor(353, 319, 7, 7);
 	Brindge_sens = App->physics->CreateRectangleSensor(85, 170, 28, 5);	
 	Tub_sens = App->physics->CreateRectangleSensor(407, 335, 28, 5);
+	Tube_sens = App->physics->CreateRectangleSensor(445, 239, 5, 10);
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH/2, SCREEN_HEIGHT + SCREEN_HEIGHT/2, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -288,6 +296,7 @@ bool ModuleSceneIntro::CleanUp()
 	App->textures->Unload(circle);
 	App->textures->Unload(box);
 	App->textures->Unload(rick);
+	App->textures->Unload(tube);
 	return true;
 }
 
@@ -317,10 +326,13 @@ update_status ModuleSceneIntro::Update()
 			int x, y;
 			recList->data->GetPosition(x, y);
 			SDL_Rect re{ 0, 0, 400, 400 };
-			App->renderer->Blit(recList->data->texturaActual, x + 1, y, &recList->data->texturaRect, 1.0f, recList->data->GetRotation());
+			App->renderer->Blit(recList->data->texturaActual, x + 1, y, &recList->data->texturaRect, 1.0f);
 		}
 		recList = recList->next;
 	}
+
+	App->renderer->Blit(tube, 370, 250, &tube_rect, 1.0f);
+
 	// ray -----------------
 	if(ray_on == true)
 	{

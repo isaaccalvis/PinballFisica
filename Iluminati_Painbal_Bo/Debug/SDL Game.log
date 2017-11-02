@@ -1,6 +1,10 @@
-﻿  ModulePlayer.cpp
-c:\users\isaaccg1\documents\github\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(188): warning C4101: 'y': unreferenced local variable
-c:\users\isaaccg1\documents\github\pinballfisica\iluminati_painbal_bo\moduleplayer.cpp(188): warning C4101: 'x': unreferenced local variable
+﻿  ModuleSceneIntro.cpp
+c:\users\isaaccg1\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(339): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\isaaccg1\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(341): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\isaaccg1\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(343): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\isaaccg1\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(346): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\isaaccg1\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(359): warning C4101: 'y': unreferenced local variable
+c:\users\isaaccg1\documents\github\pinballfisica\iluminati_painbal_bo\modulesceneintro.cpp(359): warning C4101: 'x': unreferenced local variable
 c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.11.25503\include\limits(211): warning C4577: 'noexcept' used with no exception handling mode specified; termination on exception is not guaranteed. Specify /EHsc
   SDL Game.vcxproj -> C:\Users\isaaccg1\Documents\GitHub\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.exe
   SDL Game.vcxproj -> C:\Users\isaaccg1\Documents\GitHub\PinballFisica\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.pdb (Partial PDB)

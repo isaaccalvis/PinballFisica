@@ -56,7 +56,7 @@ public:
 	bool Sens_L = false;
 	bool Sens_R = false;
 	int Bridge;
-	int Ball_A, Start_A, Bridge_A, Tub_A, Triangle_A, QuadPiramide_A, Sticker_A, Died_A;
+	int Ball_A, Bonus_A, Bridge_A, Tub_A, Triangle_A, QuadPiramide_A, Sticker_A, Died_A;
 
 	uint currentTime, lastTime, buildTime;
 

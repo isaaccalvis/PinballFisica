@@ -59,6 +59,8 @@ public:
 	PhysBody* R_Ball_sens;
 	PhysBody* Start_sens;
 	PhysBody* Tub_sens;
+	PhysBody* Tube_sens;
+
 
 	bool sensed;
 
@@ -67,9 +69,11 @@ public:
 	SDL_Texture* kicker_R;
 	SDL_Texture* kicker_L;
 	SDL_Rect r;
+	SDL_Rect tube_rect;
 	SDL_Texture* box;
 	SDL_Texture* rick;
 	SDL_Texture* circle_Reboting_Ilumination;
+	SDL_Texture* tube;
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
