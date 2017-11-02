@@ -41,6 +41,8 @@ public:
 	uint currentTime, lastTime, buildTime;
 
 	int Bridge;
+
+	int Ball_A, Start_A, Bridge_A, Tub_A, Triangle_A, QuadPiramide_A, Sticker_A, Died_A;
 	enum BrirgeWall
 	{
 		Wall,

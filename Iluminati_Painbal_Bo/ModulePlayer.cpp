@@ -8,6 +8,7 @@
 #include "math.h"
 #include "ModulePlayer.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleAudio.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled){}
 
@@ -17,6 +18,16 @@ bool ModulePlayer::Start()
 {
 	pilota_Texture = App->textures->Load("pinball/ball.png");
 	BarraInici_Texture = App->textures->Load("pinball/Barra.png");
+
+	//Audio
+	Ball_A = App->audio->LoadFx("pinball/Bola.wav");
+	Start_A = App->audio->LoadFx("pinball/Start.wav");
+	Bridge_A = App->audio->LoadFx("pinball/Bridge.wav");
+	Tub_A = App->audio->LoadFx("pinball/Tub.wav");
+	Triangle_A = App->audio->LoadFx("pinball/Triangle.wav");
+	QuadPiramide_A = App->audio->LoadFx("pinball/Quad_Piramide.wav");
+	Sticker_A = App->audio->LoadFx("pinball/Sticker.wav");
+	Died_A = App->audio->LoadFx("pinball/Die.wav");
 
 	Bridge = Wall;
 
@@ -59,11 +70,14 @@ update_status ModulePlayer::Update()
 		left_joint->EnableMotor(true);
 		left_joint->SetMaxMotorTorque(700);
 		left_joint->SetMotorSpeed(-15);
+		App->audio->PlayFx(Sticker_A);
+
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		right_joint->EnableMotor(true);
 		right_joint->SetMaxMotorTorque(700);
 		right_joint->SetMotorSpeed(15);
+		App->audio->PlayFx(Sticker_A);
 	}
 
 	// MOVIMENT BARRA INICIAL
@@ -77,6 +91,7 @@ update_status ModulePlayer::Update()
 		if (yBarraInicial != 0) {
 			barraInici->EnableMotor(true);
 			yBarraInicial = 0.0f;
+			App->audio->PlayFx(Start_A);
 		}
 	// ~MOVIMENT BARRA INICIAL
 	
@@ -91,6 +106,7 @@ update_status ModulePlayer::Update()
 	if (die) {
 		die = false;
 		barrier = true;
+		App->audio->PlayFx(Died_A);
 		App->physics->world->DestroyBody(Circle_Body->body);
 		App->physics->world->DestroyBody(Quad_Started->body);
 		if (live > 0)
@@ -143,7 +159,7 @@ update_status ModulePlayer::Update()
 	}
 
 	if (Bridge == Wall) {
-		Quad_Bridge = App->physics->CreateRectangle(250, 35, 5, 38, b2_staticBody, -0.7f);
+		Quad_Bridge = App->physics->CreateRectangle(250, 35, 5, 38, b2_staticBody, -0.7f, nullptr);
 		Bridge = Idle;
 	}
 	else if (Bridge == Destroy) {
@@ -173,8 +189,10 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyB == App->scene_intro->sensor) {
 		die = true;
 	}
-	else if (bodyB == App->scene_intro->Triangle_sens)
+	else if (bodyB == App->scene_intro->Triangle_sens) {
 		Score += 200;
+		App->audio->PlayFx(QuadPiramide_A);
+	}
 
 	else if (bodyB == App->scene_intro->Brindge_sens) {
 		if (Circle_Body->body->GetLinearVelocity().y > -1.5)
@@ -184,6 +202,7 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		else
 			Circle_Body->body->ApplyLinearImpulse({ 0, -1 }, { 0,0 }, true);
 		Score += 300;
+		App->audio->PlayFx(Bridge);
 		Bridge = BrirgeWall::Destroy;
 	}
 	else if (bodyB == App->scene_intro->Tub_sens) {
@@ -191,11 +210,14 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			Circle_Body->body->ApplyLinearImpulse({ 0, -1.5 }, { 0,0 }, true);
 		Circle_Body->body->ApplyLinearImpulse({ 0, -1 }, { 0,0 }, true);
 		Score += 400;
+		App->audio->PlayFx(Tub_A);
+
 	}
 	else if (bodyB == App->scene_intro->L_Ball_sens || bodyB == App->scene_intro->R_Ball_sens) {
 		Circle_Body->body->SetGravityScale(0);
 		lastTime = SDL_GetTicks();
 		Score += 100;
+		App->audio->PlayFx(Ball_A);
 		if (bodyB == App->scene_intro->L_Ball_sens)
 			Sens_L = true;
 		else if (bodyB == App->scene_intro->R_Ball_sens)
