@@ -46,6 +46,7 @@ public:
 	PhysBody* L_Ball_sens;
 	PhysBody* R_Ball_sens;
 	PhysBody* Start_sens;
+	PhysBody* Tub_sens;
 
 	bool sensed;
 
