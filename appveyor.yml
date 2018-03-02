@@ -7,3 +7,6 @@ build:
 - 7z a SpikeFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Iluminati_Painbal_Bo\Game\pinball"
 - 7z a SpikeFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Iluminati_Painbal_Bo\Game\*.dll"
 - 7z a SpikeFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\README.txt"
+
+artifacts:
+  - path: SpikeFromAppveyor.zip 
