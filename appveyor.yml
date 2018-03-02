@@ -3,6 +3,7 @@ image: Visual Studio 2017
 build:
   verbosity: minimal
   
+after_build:
 - 7z a SpikeFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Iluminati_Painbal_Bo\Debug\2D Physics - class 4.exe"
 - 7z a SpikeFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Iluminati_Painbal_Bo\Game\pinball"
 - 7z a SpikeFromAppveyor.zip "%APPVEYOR_BUILD_FOLDER%\Iluminati_Painbal_Bo\Game\*.dll"
